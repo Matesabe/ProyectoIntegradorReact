@@ -1,4 +1,4 @@
-import { login } from "../../services/api";
+import { login, check} from "../../services/api";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,16 @@ const LoginPage = () => {
             navigateTo("/estas-logueado");
         }
     }, [userData, navigateTo]);
+
+    const [mensajeCheck, setMensajeCheck] = useState(null);
+    const _checkAPI = async () => {
+        try{
+            const response = await check();
+            setMensajeCheck("API está funcionando correctamente");
+        }catch (error) {
+            setMensajeCheck("API no está funcionando correctamente: " + error.message);
+        }
+    };
 
     const _onHandleClick = async (event) => {
         event.preventDefault();
@@ -115,6 +125,15 @@ const LoginPage = () => {
             <p className="text-center mt-4">
                 ¿No tenés cuenta? <Link to="/register">¡Registrate!</Link>
             </p>
+            <button
+                type="submit"
+                    className={`btn btn-primary btn-block`}
+                    onClick={_checkAPI}
+                
+                >
+                Comprobar API
+            </button>
+            {mensajeCheck ? <p className="alert alert-info">{mensajeCheck}</p> : <p />}
         </div>
     );
 }

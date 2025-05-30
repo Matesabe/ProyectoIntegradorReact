@@ -1,4 +1,27 @@
-const BASE_URL = "https://sargaapi-fjhdczeyhegge3fp.eastus2-01.azurewebsites.net";
+const BASE_URL = "http://sargaapi-fjhdczeyhegge3fp.eastus2-01.azurewebsites.net";
+
+const check = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/auth`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+      },
+    });
+    if (response.status == 200) {
+      return response.json();
+    } else {
+      return Promise.reject("No autenticado");
+    }
+  } catch (error) {
+    return Promise.reject("No autenticado");
+  }
+}
 
 const login = async (email, password) => {
   try {
@@ -30,4 +53,4 @@ const login = async (email, password) => {
   }
 };
 
-export {login};
+export {login, check};
