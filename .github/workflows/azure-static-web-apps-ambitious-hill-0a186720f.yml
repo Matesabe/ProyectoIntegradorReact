@@ -41,7 +41,7 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PROUD_DESERT_0F4937D0F }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/my-react-app"       # Location of your source code
+          app_location: "."       # Location of your source code
           output_location: "dist"             # This is Vite's default build folder
 
   close_pull_request_job:
