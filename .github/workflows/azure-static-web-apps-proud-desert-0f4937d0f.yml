@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # or match your project requirement
+          node-version: '20' # or match your project requirement
 
       - name: Install dependencies
         run: |
@@ -43,7 +43,6 @@ jobs:
           action: "upload"
           app_location: "/my-react-app"       # Location of your source code
           output_location: "dist"             # This is Vite's default build folder
-          api_location: "api"                 # Optional if you're using an API
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -51,7 +50,3 @@ jobs:
     name: Close Pull Request Job
     steps:
       - name: Close Pull Request
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PROUD_DESERT_0F4937D0F }}
-          action: "close"
