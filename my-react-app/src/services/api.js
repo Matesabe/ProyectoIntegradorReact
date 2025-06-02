@@ -1,4 +1,4 @@
-const BASE_URL = "http://sargaapi-fjhdczeyhegge3fp.eastus2-01.azurewebsites.net";
+const BASE_URL = "https://sargaapi-fjhdczeyhegge3fp.eastus2-01.azurewebsites.net";
 
 const check = async () => {
   try {
