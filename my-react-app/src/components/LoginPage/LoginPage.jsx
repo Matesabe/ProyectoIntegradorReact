@@ -123,7 +123,7 @@ const LoginPage = () => {
                 {mensajeError ? <p className="alert alert-warning">{mensajeError}</p> : <p />}
             </form>
             <p className="text-center mt-4">
-                ¿No tenés cuenta? <Link to="/register">¡Registrate!</Link>
+                ¿No tenés cuenta? <Link to="/registrarse">¡Registrate!</Link>
             </p>
             <button
                 type="submit"
