@@ -18,10 +18,10 @@ export const userSlice = createSlice({
             localStorage.removeItem("apiKey");
             localStorage.removeItem("userData");
         },
+        
     },
 });
 
-export const { onLogin, onLogout,}
-    = userSlice.actions;
+export const { onLogin, onLogout, onRegister } = userSlice.actions;
 
 export default userSlice.reducer;

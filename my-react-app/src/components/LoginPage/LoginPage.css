@@ -1,3 +1,66 @@
+body {
+  background: linear-gradient(135deg, #e0eafc 0%, #dea2a2 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.login-container {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-container:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.login-container h1 {
+  color: #0259b7;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+  padding: 12px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.08);
+}
+
+.login-form-label {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+
+.login-container .form-group {
+  margin-bottom: 18px;
+}
+
+.login-container .forgot-password {
+  display: block;
+  text-align: right;
+  font-size: 0.95rem;
+  color: #007bff;
+  text-decoration: none;
+  margin-bottom: 12px;
+  transition: color 0.2s;
+}
+
+.login-container .forgot-password:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
 .login-container {
   max-width: 500px;
   margin: 50px auto;
@@ -36,4 +99,50 @@
 }
 .custom-control-label::before {
   border-color: #e9ecef;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.login-label {
+    font-size: 1rem;
+    color: #4a5568;
+    margin-bottom: 4px;
+}
+
+.login-input {
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+
+.login-input:focus {
+    border-color: #3182ce;
+    outline: none;
+}
+
+.login-button {
+    background: #3182ce;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 60%;
+    align-self: center;
+}
+
+.login-button:hover {
+    background: linear-gradient(90deg, #0056b3 60%, #007bff 100%);
+}
+
+.login-link:hover {
+    text-decoration: underline;
 }

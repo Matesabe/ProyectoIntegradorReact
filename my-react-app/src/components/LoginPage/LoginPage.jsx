@@ -39,7 +39,7 @@ const LoginPage = () => {
 
         try {
             const response = await login(userEmail, userPassword);
-            localStorage.setItem("userData", JSON.stringify(response));
+            // localStorage.setItem("userData", JSON.stringify(response));
             dispatcher(onLogin(response));
             alert("Login exitoso");
             navigateTo("/estas-logueado");
@@ -61,18 +61,21 @@ const LoginPage = () => {
 
     return (
         <div className="login-container">
-            <div className="text-center logo-container">
-                <figure className="img-fluid">
-                    <img src={sargaLogo} width="90" alt="Logo" />
-                </figure>
-            </div>
+            <Link to="/">
+            <img
+                src={sargaLogo}
+                alt="Logo"
+                className="register-logo"
+                style={{ display: "block", margin: "0 auto 20px", width: "80px", height: "80px" }}
+            />
+            </Link>
             <h1 className="text-center">Login</h1>
             <p className="text-center">
                 Ingresá con tu mail y contraseña.
             </p>
-            <form>
+            <form className="login-form">
                 <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email" className="login-label">Email</label>
                     <div className="input-group">
                         <div className="input-group-prepend">
                             <span className="input-group-text">
@@ -81,7 +84,7 @@ const LoginPage = () => {
                         </div>
                         <input
                             type="email"
-                            className="form-control"
+                            className="form-control login-input"
                             id="email"
                             placeholder="email@address.com"
                             ref={inputUserEmailRef}
@@ -90,7 +93,7 @@ const LoginPage = () => {
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Contraseña</label>
+                    <label htmlFor="password" className="login-label">Contraseña</label>
                     <div className="input-group">
                         <div className="input-group-prepend">
                             <span className="input-group-text">
@@ -99,7 +102,7 @@ const LoginPage = () => {
                         </div>
                         <input
                             type="password"
-                            className="form-control"
+                            className="form-control login-input"
                             id="password"
                             placeholder="Password"
                             ref={inputUserPasswordRef}
@@ -114,7 +117,7 @@ const LoginPage = () => {
                 </div>
                 <button
                     type="submit"
-                    className={`btn btn-primary btn-block`}
+                    className={`btn btn-primary btn-block login-button`}
                     onClick={_onHandleClick}
                     disabled={btnDisabled}
                 >
@@ -123,16 +126,9 @@ const LoginPage = () => {
                 {mensajeError ? <p className="alert alert-warning">{mensajeError}</p> : <p />}
             </form>
             <p className="text-center mt-4">
-                ¿No tenés cuenta? <Link to="/registrarse">¡Registrate!</Link>
+                ¿No tenés cuenta? <Link to="/register" className="login-link">¡Registrate!</Link>
             </p>
-            <button
-                type="submit"
-                    className={`btn btn-primary btn-block`}
-                    onClick={_checkAPI}
-                
-                >
-                Comprobar API
-            </button>
+            <div className="text-center mt-3"></div>
             {mensajeCheck ? <p className="alert alert-info">{mensajeCheck}</p> : <p />}
         </div>
     );

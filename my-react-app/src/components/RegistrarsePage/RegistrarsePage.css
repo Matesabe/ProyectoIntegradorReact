@@ -1,0 +1,74 @@
+/* RegistrarsePage.css */
+
+.register-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 32px 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.register-title {
+    color: #0259b7;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.register-label {
+    font-size: 1rem;
+    color: #4a5568;
+    margin-bottom: 4px;
+}
+
+.register-input {
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+
+.register-input:focus {
+    border-color: #3182ce;
+    outline: none;
+}
+
+.register-button {
+    background: #3182ce;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 80%;
+    align-self: center;
+}
+
+.register-button:hover {
+    background: linear-gradient(90deg, #0056b3 60%, #007bff 100%);
+}
+
+.register-link {
+    color: #3182ce;
+    text-decoration: none;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}

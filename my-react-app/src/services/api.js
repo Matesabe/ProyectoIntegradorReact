@@ -53,37 +53,35 @@ const login = async (email, password) => {
   }
 };
 
-const registrarse = async (username, password, email, ci) => {
+const registrarse = async (username, password, email, ci, phone) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/prueba/users`, {
+    const response = await fetch(`${BASE_URL}/api/users`, {
       method: "POST",
       headers: {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Max-Age": "3600",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        id: 0, // Assuming the API expects an ID, but it might be auto-generated
+        id: 0,
         ci: ci,
         name: username,
         email: email,
         password: password,
-        phone: phone, // Assuming the API expects a phone field
-        rol: "usuario", // Assuming the API expects a roles array
+        phone: phone,
+        rol: "Client"
       }),
     });
-    if (response.status == 200) {
-      return response.json();
-    } else if (response.status == 400) {
-      return Promise.reject("Error en los datos enviados");
+
+    if (response.ok) {
+      console.log("Registro exitoso");
+      return await response.json();
+    } else if (response.status === 400) {
+      const errorText = await response.text(); 
+      return Promise.reject(`Error en los datos enviados: ${errorText}`);
     } else {
-      return Promise.reject("Ha ocurrido un error");
+      return Promise.reject(`Error inesperado: ${response.status}`);
     }
   } catch (error) {
-    return Promise.reject("Ha ocurrido un error");
+    return Promise.reject("Ha ocurrido un error en la conexión");
   }
 };
 

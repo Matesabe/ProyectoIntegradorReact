@@ -1,6 +1,7 @@
 import React, { use } from 'react';
 import ExampleComponent from './components/ExampleComponent';
 import { useState, useEffect } from 'react'
+import {HomePage} from './components/HomePage/HomePage';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegistrarsePage from './components/RegistrarsePage/RegistrarsePage';
 import EstasLogueadoPage from './components/EstasLogueado/EstasLogueadoPage';
@@ -19,7 +20,7 @@ function App() {
         if (
             userData &&
             userData.token &&
-            (location.pathname === '/login' || location.pathname === '/registrarse')
+            (location.pathname === '/login' || location.pathname === '/register')
         ) {
             navigateTo('/estas-logueado');
         }
@@ -28,9 +29,10 @@ function App() {
     return (
         <div className='App'>
             <Routes>
-                <Route path="/" element={<Navigate to="/login" replace />} />
+                
+                <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/registrarse" element={<RegistrarsePage />} />
+                <Route path="/register" element={<RegistrarsePage />} />
                 <Route
                     path="/estas-logueado"
                     element={
@@ -39,7 +41,7 @@ function App() {
                         </PrivateRoute>
                     }
                 />
-                <Route path="*" element={<Navigate to="/login" replace />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </div>
     );

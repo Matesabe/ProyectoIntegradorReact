@@ -1,15 +1,14 @@
 import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { onLogin } from "../../app/slices/userSlice";
-import { registrarse } from "../../services/api";
+import { registrarse, login } from "../../services/api";
 import "./RegistrarsePage.css";
-
-
+import sargaLogo from "../../img/sargaLogo.png";
 
 const RegistrarsePage = () => {
-    const checkUser = localStorage.getItem("userData");
+const checkUser = useSelector((state) => state.userSlice.userData);
 const dispatcher = useDispatch();
 
 const inputUserNameRef = useRef();
@@ -37,13 +36,22 @@ const navigateTo = useNavigate();
                 inputPassRef.current.value,
                 inputUserEmailRef.current.value,
                 inputUserCiRef.current.value,
+                inputPhoneRef.current.value
             );
-            dispatcher(onLogin(response)); // Login automático post registro   
+            alert("Registro exitoso:", response);
+            const responseLogin = await login(
+                inputUserEmailRef.current.value,
+                inputPassRef.current.value
+            );
+            // localStorage.setItem("userData", JSON.stringify(response));
+            dispatcher(onLogin(responseLogin));
+            alert("Login exitoso");
+            navigateTo("/estas-logueado");
         } catch (error) {
             setMensajeError(error);
         }
+        
     };
-
 
     const _onHandleChange = () => {
         if (
@@ -61,14 +69,22 @@ const navigateTo = useNavigate();
     
     return (
         <div className="register-container">
-            <h1 className="text-center">Register</h1>
-            <p className="text-center">
-                Registrarse en la app.
+            <Link to="/">
+            <img
+                src={sargaLogo}
+                alt="Logo"
+                className="register-logo"
+                style={{ display: "block", margin: "0 auto 20px", width: "80px", height: "80px" }}
+            />
+            </Link>
+            <h1 className="text-center register-title">Registro de Usuario</h1>
+            <p className="text-center register-description">
+                ¡Registrate para obtener beneficios exclusivos!
             </p>
-            <form>
+            <form  className='register-form'>
                 {/** Alert here */}
                 <div className="form-group">
-                    <label htmlFor="usuario">Nombre de usuario</label>
+                    <label htmlFor="usuario" className='register-label'>Nombre de usuario</label>
                     <div className="input-group">
                         <div className="input-group-prepend">
                             <span className="input-group-text">
@@ -77,7 +93,7 @@ const navigateTo = useNavigate();
                         </div>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control register-input"
                             id="usuario"
                             placeholder="fulanito123"
                             ref={inputUserNameRef}
@@ -86,7 +102,7 @@ const navigateTo = useNavigate();
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="usuario">Cédula de identidad</label>
+                    <label htmlFor="usuario" className='register-label'>Cédula de identidad</label>
                     <div className="input-group">
                         <div className="input-group-prepend">
                             <span className="input-group-text">
@@ -95,7 +111,7 @@ const navigateTo = useNavigate();
                         </div>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control register-input"
                             id="ci"
                             placeholder="12345678"
                             ref={inputUserCiRef}
@@ -104,7 +120,7 @@ const navigateTo = useNavigate();
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="usuario">Email</label>
+                    <label htmlFor="usuario" className='register-label'>Email</label>
                     <div className="input-group">
                         <div className="input-group-prepend">
                             <span className="input-group-text">
@@ -113,7 +129,7 @@ const navigateTo = useNavigate();
                         </div>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control register-input"
                             id="email"
                             placeholder="fulanito@mail.com"
                             ref={inputUserEmailRef}
@@ -122,7 +138,7 @@ const navigateTo = useNavigate();
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password" className='register-label'>Password</label>
                     <div className="input-group">
                         <div className="input-group-prepend">
                             <span className="input-group-text">
@@ -131,7 +147,7 @@ const navigateTo = useNavigate();
                         </div>
                         <input
                             type="password"
-                            className="form-control"
+                            className="form-control register-input"
                             id="password"
                             placeholder="Password"
                             ref={inputPassRef}
@@ -145,7 +161,7 @@ const navigateTo = useNavigate();
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Teléfono</label>
+                    <label htmlFor="phone" className='register-label'>Teléfono</label>
                     <div className="input-group">
                         <div className="input-group-prepend">
                             <span className="input-group-text">
@@ -154,9 +170,9 @@ const navigateTo = useNavigate();
                         </div>
                         <input
                             type="text"
-                            className="form-control"
+                            className="form-control register-input"
                             id="phone"
-                            placeholder=""
+                            placeholder="09XXXXXXXX"
                             ref={inputPhoneRef}
                             onChange={_onHandleChange}
                         />
@@ -191,7 +207,7 @@ const navigateTo = useNavigate();
                 </div> */}
                 <button
                     type="submit"
-                    className={`btn btn-primary btn-block`}
+                    className={`btn btn-primary btn-block register-button`}
                     onClick={_onHandleClick}
                     disabled={btnDisabled}
                 >
@@ -199,6 +215,9 @@ const navigateTo = useNavigate();
                 </button>
                 {mensajeError ? <p className="alert alert-warning">{mensajeError}</p> : <p />}
             </form>
+            <p className="text-center mt-4">
+            ¿Ya tenés cuenta? <Link to="/login" className="login-link">¡Iniciá sesión!</Link>
+            </p>
         </div>
     );
 };
