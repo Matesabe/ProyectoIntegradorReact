@@ -34,7 +34,6 @@
     align-items: center;
     justify-content: space-around;
     gap: 20px;
-    margin-bottom: 40px;
     position: relative;
     padding: 0 16px; /* Add padding to prevent edge overflow */
     box-sizing: border-box;
@@ -107,6 +106,76 @@
     border-radius: 2px;
 }
 
+.home-header .user-icon {
+    position: relative !important;
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1100; /* Ensure dropdown is above nav */
+    overflow:auto; /* Allow dropdown to overflow */
+}
+
+.home-header .user-icon-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.home-header .user-icon img {
+    cursor: pointer;
+}
+
+.home-header .user-icon .user-name {
+    margin-left: 8px;
+    font-size: 1rem;
+    color: #2d3a4b;
+    cursor: pointer; /* Agregar cursor pointer */
+}
+
+.home-header .user-icon:hover .user-name {
+    color: #4f8cff;
+}
+
+.home-header .user-dropdown {
+    display: none; /* Oculto por defecto */
+    position: relative !important; /* Position absolutely relative to .user-icon */
+    top: 100%; /* Place it just below the parent */
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 150px;
+    list-style: none;
+    margin: 0;
+}
+
+/* Clase para mostrar el dropdown */
+.home-header .user-dropdown.show {
+    display: block;
+}
+
+.home-header .user-dropdown li {
+    padding: 0;
+    border-bottom: none;
+    width: 100%;
+}
+
+.home-header .user-dropdown a {
+    display: block;
+    padding: 12px 16px;
+    color: #2d3a4b;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.home-header .user-dropdown a:hover {
+    background-color: #f5f5f5;
+    color: #4f8cff;
+}
+
 /* Contenido principal */
 .home-content {
     display: flex;
@@ -171,7 +240,6 @@
     height: 400px;
     gap: 20px;
     box-sizing: border-box;
-    overflow: hidden; /* Prevent content overflow */
 }
 
 .catalogo-text {
@@ -217,6 +285,214 @@
     border-radius: 8px;
 }
 
+.productos-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: #c39090;
+    width: min(80%, 100vw); /* Prevent overflow */
+    max-width: 1200px; /* Set maximum width */
+    height: 400px;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.productos-section .productos-image {
+    width: 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.productos-section .productos-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.productos-section .productos-image img:hover {
+    opacity: 0.8; /* Slightly darken on hover */
+    transition: opacity 0.3s;
+}
+
+.productos-section .productos-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.productos-section .productos-image::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    background: rgba(45, 58, 75, 0.85);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 2;
+    white-space: nowrap;
+}
+
+.productos-section .productos-image:hover::before {
+    opacity: 1;
+}
+
+.puntos-section {
+    display: flex;
+    flex-direction: column; /* Cambiar de row a column */
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: #f0f4f8;
+    width: min(80%, 100vw);
+    max-width: 1200px;
+    height: auto; /* Cambiar de altura fija a auto */
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.puntos-text {
+    width: 100%; /* Cambiar de 50% a 100% para ocupar todo el ancho */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.puntos-text h2 {
+    font-size: 1.8rem;
+    color: #2d3a4b;
+    margin-bottom: 20px;
+}
+
+.puntos-text p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.puntos-image {
+    width: 100%; /* Cambiar de 50% a 100% para ocupar todo el ancho */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px; /* Cambiar de 20px a una altura apropiada */
+    overflow: hidden; /* Prevenir que la imagen se desborde */
+}
+
+.puntos-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantener proporción sin distorsión */
+    border-radius: 8px;
+}
+
+.footer {
+    width: 100%;
+    background-color: #2d3a4b;
+    color: #ffffff;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-text{
+    width: 50%;
+    font-size: 1rem;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.footer-links {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#instagram-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.footer-copyright {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    background-color: #482727;
+    color: #ffffff;
+    font-size: 0.9rem;
+    position: relative;
+}
+/* Productos móvil */
+@media (max-width: 768px) {
+    .productos-section {
+        flex-direction: column;
+        width: 95%;
+        max-width: 100vw;
+        height: auto;
+        padding: 20px 16px;
+        gap: 16px;
+        box-sizing: border-box;
+    }
+
+    .productos-section .productos-image {
+        width: 100%;
+        max-width: 100%;
+        height: 180px;
+        margin-bottom: 12px;
+        overflow: hidden;
+    }
+
+    .productos-section .productos-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+}
+
+/* Footer móvil */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 0;
+    }
+
+    .footer-text,
+    .footer-links {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .footer-links {
+        gap: 16px;
+        margin-top: 8px;
+    }
+
+    .footer-copyright {
+        font-size: 0.8rem;
+        height: auto;
+        padding: 8px 0;
+    }
+}
 /* Media Queries - Móvil */
 @media (max-width: 768px) {
     /* Header móvil */
@@ -227,19 +503,20 @@
         padding: 16px;
         gap: 0;
         width: 100%;
-        max-width: 100vw; /* Prevent overflow */
+        max-width: 100vw;
         box-sizing: border-box;
     }
 
-    /* Mostrar botón hamburguesa */
+    /* IMPORTANTE: Mostrar botón hamburguesa */
     .mobile-menu-btn {
-        display: flex;
+        display: flex !important; /* Usar !important para asegurar que se muestre */
+        order: 2; /* Asegurar que aparezca al final */
     }
 
-    /* Navegación móvil */
+    /* Ocultar navegación por defecto en móvil */
     .home-header nav {
         width: 100%;
-        max-width: 100vw; /* Prevent overflow */
+        max-width: 100vw;
         display: none;
         flex-direction: column;
         align-items: center;
@@ -250,17 +527,34 @@
         position: absolute;
         top: 100%;
         left: 0;
-        right: 0; /* Ensure it spans full width */
+        right: 0;
         z-index: 100;
         border-radius: 0 0 8px 8px;
         box-sizing: border-box;
-        overflow-y: auto; /* Allow vertical scroll if needed */
-        max-height: 70vh; /* Limit height to prevent overflow */
+        overflow-y: auto;
+        max-height: 70vh;
     }
 
     /* Mostrar navegación cuando está abierta */
     .home-header.nav-open nav {
+        display: flex !important;
+    }
+
+    /* Logo debe estar al principio */
+    .home-header figure {
+        order: 1;
+        margin: 0;
+    }
+
+    /* Si hay usuario logueado, el dropdown también debe funcionar */
+    .home-header .user-icon {
+        position: relative;
         display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 1100;
+        overflow: visible;
+        order: 1.5; /* Entre el logo y el botón hamburguesa */
     }
 
     /* Lista móvil */
@@ -279,7 +573,7 @@
         text-align: left;
         font-size: 1.1rem;
         box-sizing: border-box;
-        word-wrap: break-word; /* Break long words */
+        word-wrap: break-word;
     }
 
     .home-header li:last-child {
@@ -343,6 +637,38 @@
         height: 200px;
         margin-top: 20px;
         overflow: hidden; /* Prevent image overflow */
+    }
+
+    /* Puntos móvil - ya está configurado para column */
+    .puntos-section {
+        flex-direction: column;
+        width: 95%;
+        height: auto;
+        padding: 20px 16px;
+    }
+
+    .puntos-text,
+    .puntos-image {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .puntos-text {
+        padding: 0 16px 20px 16px;
+        text-align: center;
+    }
+
+    .puntos-image {
+        height: 200px; /* Altura apropiada para móvil */
+        margin-top: 20px;
+        overflow: hidden;
+    }
+
+    .puntos-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
     }
 }
 

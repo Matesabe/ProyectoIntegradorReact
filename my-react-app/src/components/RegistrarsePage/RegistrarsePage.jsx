@@ -23,7 +23,7 @@ const navigateTo = useNavigate();
 
     useEffect(() => {
         if (checkUser) {
-            navigateTo("/estas-logueado");
+            navigateTo("/");
         }
     }, [checkUser])//autologin -> lleva al dashboard
 
@@ -46,7 +46,7 @@ const navigateTo = useNavigate();
             // localStorage.setItem("userData", JSON.stringify(response));
             dispatcher(onLogin(responseLogin));
             alert("Login exitoso");
-            navigateTo("/estas-logueado");
+            navigateTo("/");
         } catch (error) {
             setMensajeError(error);
         }

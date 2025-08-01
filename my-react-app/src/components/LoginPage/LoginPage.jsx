@@ -18,19 +18,11 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (userData && userData.token) {
-            navigateTo("/estas-logueado");
+            navigateTo("/");
         }
     }, [userData, navigateTo]);
 
     const [mensajeCheck, setMensajeCheck] = useState(null);
-    const _checkAPI = async () => {
-        try{
-            const response = await check();
-            setMensajeCheck("API está funcionando correctamente");
-        }catch (error) {
-            setMensajeCheck("API no está funcionando correctamente: " + error.message);
-        }
-    };
 
     const _onHandleClick = async (event) => {
         event.preventDefault();
@@ -39,10 +31,9 @@ const LoginPage = () => {
 
         try {
             const response = await login(userEmail, userPassword);
-            // localStorage.setItem("userData", JSON.stringify(response));
             dispatcher(onLogin(response));
             alert("Login exitoso");
-            navigateTo("/estas-logueado");
+            navigateTo("/");
         } catch (error) {
             setMensajeError(error.message || "Error al iniciar sesión");
         }

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import {HomePage} from './components/HomePage/HomePage';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegistrarsePage from './components/RegistrarsePage/RegistrarsePage';
-import EstasLogueadoPage from './components/EstasLogueado/EstasLogueadoPage';
+import { ProfilePage } from './components/ProfilePage/ProfilePage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
@@ -22,7 +22,7 @@ function App() {
             userData.token &&
             (location.pathname === '/login' || location.pathname === '/register')
         ) {
-            navigateTo('/estas-logueado');
+            navigateTo('/');
         }
     }, [userData, location, navigateTo]);
 
@@ -33,14 +33,16 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegistrarsePage />} />
+                {/* Protected route for ProfilePage */}
                 <Route
-                    path="/estas-logueado"
+                    path="/profile"
                     element={
                         <PrivateRoute>
-                            <EstasLogueadoPage />
+                            <ProfilePage />
                         </PrivateRoute>
                     }
-                />
+                />    
+                
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </div>
