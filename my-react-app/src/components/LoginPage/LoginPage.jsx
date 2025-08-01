@@ -1,9 +1,10 @@
-import { login, check} from "../../services/api";
+import { login} from "../../services/api";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { onLogin } from "../../app/slices/userSlice";
 import sargaLogo from "../../img/sargaLogo.png";
+import {BlinkBlur} from "react-loading-indicators"
 import "./LoginPage.css";
 
 const LoginPage = () => {
@@ -13,8 +14,17 @@ const LoginPage = () => {
 
     const inputUserEmailRef = useRef();
     const inputUserPasswordRef = useRef();
-    const [btnDisabled, setBtnDisabled] = useState(true);
+    const [btnDisabled, setBtnDisabled] = useState(false);
     const [mensajeError, setMensajeError] = useState(null);
+
+    const showLoading = (show) => {
+         const loadingElement = document.querySelector(".loading-container");
+         if (show) {
+             loadingElement.innerHTML = "<BlinkBlur className=\"loading\" color={[\"#1f3a66\", \"#2a508e\", \"#3666b5\", \"#5280cc\"]} size=\"small\" text=\"Iniciando Sesión\" textColor=\"\" />";
+         } else {
+             loadingElement.innerHTML = "";
+         }
+    };
 
     useEffect(() => {
         if (userData && userData.token) {
@@ -22,7 +32,6 @@ const LoginPage = () => {
         }
     }, [userData, navigateTo]);
 
-    const [mensajeCheck, setMensajeCheck] = useState(null);
 
     const _onHandleClick = async (event) => {
         event.preventDefault();
@@ -30,12 +39,29 @@ const LoginPage = () => {
         const userPassword = inputUserPasswordRef.current.value;
 
         try {
+            setBtnDisabled(true);
+
+            if (!userEmail || !userPassword) {
+                setMensajeError("Por favor, complete todos los campos.");
+                setBtnDisabled(false);
+                return;
+            }
+
+            showLoading(true);
+            setMensajeError(null);
+            setBtnDisabled(true);
+
             const response = await login(userEmail, userPassword);
+            
             dispatcher(onLogin(response));
             alert("Login exitoso");
+            showLoading(false);
+            setBtnDisabled(false);
             navigateTo("/");
         } catch (error) {
             setMensajeError(error.message || "Error al iniciar sesión");
+            showLoading(false);
+            setBtnDisabled(false);
         }
     };
 
@@ -114,13 +140,15 @@ const LoginPage = () => {
                 >
                     Login
                 </button>
-                {mensajeError ? <p className="alert alert-warning">{mensajeError}</p> : <p />}
+                <div className="loading-container">
+                    
+                </div>
+                <p className="alert alert-warning">{mensajeError}</p> 
             </form>
             <p className="text-center mt-4">
                 ¿No tenés cuenta? <Link to="/register" className="login-link">¡Registrate!</Link>
             </p>
             <div className="text-center mt-3"></div>
-            {mensajeCheck ? <p className="alert alert-info">{mensajeCheck}</p> : <p />}
         </div>
     );
 }

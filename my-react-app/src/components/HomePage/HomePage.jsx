@@ -59,7 +59,6 @@ const HomePage = () => {
         e.preventDefault();
         dispatch(onLogout());
         setIsDropdownOpen(false); // Cerrar dropdown después del logout
-        alert("Logout exitoso");
         navigateTo("/");
     };
 

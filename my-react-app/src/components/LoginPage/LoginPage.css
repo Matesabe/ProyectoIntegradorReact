@@ -143,6 +143,30 @@ body {
     background: linear-gradient(90deg, #0056b3 60%, #007bff 100%);
 }
 
+.login-button:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    display: none; /* Initially hidden */
+}
+
+.blink-blur-rli-bounding-box .blink-blur-indicator {
+    isolation: isolate;
+    display: flex
+;
+    flex-direction: row;
+    -moz-column-gap: 0.4em;
+    column-gap: 0.4em;
+    align-items: center;
+    justify-content: center;
+}
+
 .login-link:hover {
     text-decoration: underline;
 }

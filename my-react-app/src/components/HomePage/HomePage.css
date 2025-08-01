@@ -51,7 +51,6 @@
 
 .home-header nav {
     max-width: 100%;
-    overflow-x: auto; /* Allow horizontal scroll if needed */
     overflow-y: hidden; /* Prevent vertical overflow */
 }
 

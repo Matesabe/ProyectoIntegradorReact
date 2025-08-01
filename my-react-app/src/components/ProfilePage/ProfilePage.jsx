@@ -2,9 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getComprasByUserId } from "../../services/api";
 import "./ProfilePage.css";
 import sargaLogo from "../../img/sargaLogo.png";
 import userIcon from "../../img/Home/user_icon.png";
+import { onLogout } from '../../app/slices/userSlice';
 
 const ProfilePage = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -14,7 +16,42 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const userLoged = userData && userData.token;
+  const userToken = userData ? userData.token : null;
   const isAdmin = userData && userData.userData && userData.userData.Role === "admin";
+  const [comprasCliente, setComprasCliente] = useState([]);
+  
+
+  useEffect(() => {
+    if (userLoged) {
+      getComprasByUserId(userData.userData.id, userToken)
+        .then((compras) => {
+          setComprasCliente(compras);
+          displayCompras(compras);
+        })
+        .catch((error) => {
+          console.error("Error al obtener las compras:", error);
+        });
+    }
+  }, [userLoged, userData.userData.id]);
+
+  const displayCompras = (compras) => {
+    const comprasList = document.querySelector(".purchase-history-list");
+    if (!compras || compras.length === 0) {
+      comprasList.innerHTML = "<p>No tienes compras registradas.</p>";
+      return;
+    }
+    comprasList.innerHTML = ""; // Limpiar la lista antes de mostrar las nuevas compras
+    compras.forEach((compra) => {
+      const compraItem = document.createElement("div");
+      compraItem.className = "compra-item";
+      compraItem.innerHTML = `
+        <p>ID: ${compra.id}</p>
+        <p>Fecha: ${new Date(compra.fecha).toLocaleDateString()}</p>
+        <p>Total: $${compra.total}</p>
+      `;
+      comprasList.appendChild(compraItem);
+    });
+  };
 
   const renderNavLinks = () => {
     if (userLoged) {
@@ -122,7 +159,6 @@ const ProfilePage = () => {
         <p>Puntos Sarga: {userData.userData.points}</p>
         <p>Email: {userData.userData.email}</p>
         <p>Teléfono: {userData.userData.phone}</p>
-        <p></p>
       </div>
       <div className="purchase-history">
         <div className="purchase-history-content">
