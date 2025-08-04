@@ -5,6 +5,7 @@ import {HomePage} from './components/HomePage/HomePage';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegistrarsePage from './components/RegistrarsePage/RegistrarsePage';
 import { ProfilePage } from './components/ProfilePage/ProfilePage';
+import {CatalogPage} from './components/CatalogPage/CatalogPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegistrarsePage />} />
+                <Route path="/catalog" element={<CatalogPage />} />
                 {/* Protected route for ProfilePage */}
                 <Route
                     path="/profile"

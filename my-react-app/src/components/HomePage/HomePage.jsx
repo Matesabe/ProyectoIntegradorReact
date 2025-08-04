@@ -96,7 +96,7 @@ const HomePage = () => {
 
                     <nav>
                         <ul>
-                            <li><a href="/">Catálogo</a></li>
+                            <li><a href="/catalog">Catálogo</a></li>
                             <li><a href="/">Puntos Sarga</a></li>
                             {renderNavLinks()}
                         </ul>
@@ -112,7 +112,7 @@ const HomePage = () => {
             <div id='catalogo' className='catalogo-section'>
                 <div className='catalogo-text'>
                     <h2>Conocé las últimas novedades.</h2>
-                    <a id="ver-catalogo" href="/">Ver Catálogo</a>
+                    <a id="ver-catalogo" href="/catalog">Ver Catálogo</a>
                 </div>
                 <div className='catalogo-image'>
                     <img src={imagenCatalogo} alt="Catálogo" />

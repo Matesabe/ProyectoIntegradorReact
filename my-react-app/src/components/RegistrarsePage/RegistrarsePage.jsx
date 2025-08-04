@@ -6,6 +6,7 @@ import { onLogin } from "../../app/slices/userSlice";
 import { registrarse, login } from "../../services/api";
 import "./RegistrarsePage.css";
 import sargaLogo from "../../img/sargaLogo.png";
+import {BlinkBlur} from "react-loading-indicators"
 
 const RegistrarsePage = () => {
 const checkUser = useSelector((state) => state.userSlice.userData);
@@ -17,9 +18,19 @@ const inputPassRef = useRef();
 const inputUserCiRef = useRef();
 const inputPhoneRef = useRef();
 
-const [btnDisabled, setBtnDisabled] = useState(true);
+const [btnDisabled, setBtnDisabled] = useState(false);
 const [mensajeError, setMensajeError] = useState(null);
 const navigateTo = useNavigate();
+const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const loadingElement = document.querySelector(".loading-container");
+        if (loading) {
+            loadingElement.style.display = "flex";
+        } else {
+            loadingElement.style.display = "none";
+        }
+    }, [loading]);
 
     useEffect(() => {
         if (checkUser) {
@@ -31,6 +42,9 @@ const navigateTo = useNavigate();
     const _onHandleClick = async (event) => {
         event.preventDefault();//evitar envío formulario
         try {
+            setBtnDisabled(true);
+            setLoading(true);
+            setMensajeError(null);
             const response = await registrarse(
                 inputUserNameRef.current.value,
                 inputPassRef.current.value,
@@ -38,17 +52,19 @@ const navigateTo = useNavigate();
                 inputUserCiRef.current.value,
                 inputPhoneRef.current.value
             );
-            alert("Registro exitoso:", response);
             const responseLogin = await login(
                 inputUserEmailRef.current.value,
                 inputPassRef.current.value
             );
-            // localStorage.setItem("userData", JSON.stringify(response));
+            setLoading(false);
+            setBtnDisabled(false);
             dispatcher(onLogin(responseLogin));
             alert("Login exitoso");
             navigateTo("/");
         } catch (error) {
             setMensajeError(error);
+            setLoading(false);
+            setBtnDisabled(false);
         }
         
     };
@@ -213,6 +229,9 @@ const navigateTo = useNavigate();
                 >
                     Registrarse
                 </button>
+                <div className="loading-container">
+                    <BlinkBlur className="loading" color={["#1f3a66", "#2a508e", "#3666b5", "#5280cc"]} size="small" text="Registrando..." textColor="" />
+                </div>
                 {mensajeError ? <p className="alert alert-warning">{mensajeError}</p> : <p />}
             </form>
             <p className="text-center mt-4">

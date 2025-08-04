@@ -153,13 +153,17 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
-    display: none; /* Initially hidden */
+}
+
+.loading-container {
+    display: none;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .blink-blur-rli-bounding-box .blink-blur-indicator {
     isolation: isolate;
-    display: flex
-;
+    display: flex;
     flex-direction: row;
     -moz-column-gap: 0.4em;
     column-gap: 0.4em;

@@ -86,4 +86,27 @@ const getComprasByUserId = async (userId, userToken) => {
   }
 }
 
-export {login, registrarse, getComprasByUserId};
+const getMistralProducts = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/products/brand/mistral`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener los productos");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener los productos");
+  }
+};
+
+export {login, registrarse, getComprasByUserId, getMistralProducts};

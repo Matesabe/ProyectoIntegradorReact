@@ -16,15 +16,16 @@ const LoginPage = () => {
     const inputUserPasswordRef = useRef();
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [mensajeError, setMensajeError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    const showLoading = (show) => {
-         const loadingElement = document.querySelector(".loading-container");
-         if (show) {
-             loadingElement.innerHTML = "<BlinkBlur className=\"loading\" color={[\"#1f3a66\", \"#2a508e\", \"#3666b5\", \"#5280cc\"]} size=\"small\" text=\"Iniciando Sesión\" textColor=\"\" />";
-         } else {
-             loadingElement.innerHTML = "";
-         }
-    };
+    useEffect(() => {
+        const loadingElement = document.querySelector(".loading-container");
+        if (loading) {
+            loadingElement.style.display = "flex";
+        } else {
+            loadingElement.style.display = "none";
+        }
+    }, [loading]);
 
     useEffect(() => {
         if (userData && userData.token) {
@@ -47,20 +48,19 @@ const LoginPage = () => {
                 return;
             }
 
-            showLoading(true);
+            setLoading(true);
             setMensajeError(null);
             setBtnDisabled(true);
 
             const response = await login(userEmail, userPassword);
             
             dispatcher(onLogin(response));
-            alert("Login exitoso");
-            showLoading(false);
+            setLoading(false);
             setBtnDisabled(false);
             navigateTo("/");
         } catch (error) {
             setMensajeError(error.message || "Error al iniciar sesión");
-            showLoading(false);
+            setLoading(false);
             setBtnDisabled(false);
         }
     };
@@ -141,7 +141,7 @@ const LoginPage = () => {
                     Login
                 </button>
                 <div className="loading-container">
-                    
+                    <BlinkBlur className="loading" color={["#1f3a66", "#2a508e", "#3666b5", "#5280cc"]} size="small" text="Iniciando Sesión" textColor="" />
                 </div>
                 <p className="alert alert-warning">{mensajeError}</p> 
             </form>

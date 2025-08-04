@@ -1,4 +1,115 @@
-/* Estilos base */
+:root {
+    --field-drab: #73683bff;
+    --field-drab-2: #675d35;
+    --caf-noir: #583e23ff;
+    --gunmetal: #13262fff;
+    --khaki: #b0a084ff;
+    --lavender-web: #e9e6ffff;
+    --gradient-main: linear-gradient(135deg, var(--field-drab) 0%, var(--caf-noir) 25%, var(--gunmetal) 50%, var(--khaki) 75%, var(--lavender-web) 100%);
+}
+
+.home-page {
+    color: var(--caf-noir);
+    background: var(--field-drab);
+}
+
+.home-container {
+    background: var(--gradient-main);
+}
+
+.home-header {
+    background-color: var(--khaki);
+    color: var(--gunmetal);
+}
+
+.home-header li,
+.home-header .user-icon .user-name {
+    color: var(--lavender-web);
+}
+
+.home-header li:hover,
+.home-header .user-icon:hover .user-name {
+    color: var(--khaki);
+}
+
+.home-header .user-dropdown {
+    background-color: var(--field-drab);
+    border-color: var(--caf-noir);
+    color: var(--gunmetal);
+}
+
+.home-header .user-dropdown a {
+    color: var(--gunmetal);
+}
+
+.home-header .user-dropdown a:hover {
+    background-color: var(--khaki);
+    color: var(--lavender-web);
+}
+
+.home-content {
+    background: var(--gradient-main);
+}
+
+.home-title {
+    color: var(--lavender-web);
+    text-shadow: 1px 1px 2px var(--caf-noir);
+}
+
+.home-description {
+    color: var(--lavender-web);
+    text-shadow: 1px 1px 2px var(--caf-noir);
+}
+
+.catalogo-section {
+    background-color: var(--field-drab);
+}
+
+.catalogo-text h2 {
+    color: var(--lavender-web);
+}
+
+.catalogo-text #ver-catalogo {
+    background-color: var(--khaki);
+    color: var(--lavender-web);
+}
+
+.catalogo-text #ver-catalogo:hover {
+    background-color: var(--lavender-web);
+    color: var(--gunmetal);
+}
+
+.productos-section {
+    background-color: var(--field-drab-2);
+}
+
+.productos-section .productos-image::before {
+    background: var(--caf-noir);
+    color: var(--lavender-web);
+}
+
+.puntos-section {
+    background-color: var(--field-drab);
+}
+
+.puntos-text h2 {
+    color: var(--lavender-web);
+}
+
+.puntos-text p {
+    color: var(--lavender-web);
+}
+
+.footer {
+    background-color: var(--caf-noir);
+    color: var(--lavender-web);
+}
+
+.footer-copyright {
+    background-color: var(--gunmetal);
+    color: var(--lavender-web);
+}
+
 .home-page {
     font-family: 'Arial', sans-serif;
     color: #2d3a4b;
@@ -13,7 +124,6 @@
 }
 
 .home-container {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c39090 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,7 +178,6 @@
 
 .home-header li {
     font-size: 1.2rem;
-    color: #2d3a4b;
     cursor: pointer;
     transition: color 0.2s;
 }
@@ -100,7 +209,6 @@
 .mobile-menu-btn span {
     width: 25px;
     height: 3px;
-    background-color: #2d3a4b;
     transition: all 0.3s ease;
     border-radius: 2px;
 }
@@ -127,7 +235,6 @@
 .home-header .user-icon .user-name {
     margin-left: 8px;
     font-size: 1rem;
-    color: #2d3a4b;
     cursor: pointer; /* Agregar cursor pointer */
 }
 
@@ -164,7 +271,6 @@
 .home-header .user-dropdown a {
     display: block;
     padding: 12px 16px;
-    color: #2d3a4b;
     text-decoration: none;
     font-size: 0.9rem;
     transition: background-color 0.2s;
@@ -182,7 +288,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-image: url(/src/img/Home/la_editada.png);
+    background-image: url(/src/img/Home/homeBack.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -199,8 +305,6 @@
 .home-title {
     font-size: clamp(1.8rem, 4vw, 2.5rem); /* Responsive font size */
     font-weight: bold;
-    color: #2d415b;
-    text-shadow: 1px 1px 2px rgba(230, 230, 230, 0.8);
     margin-bottom: 20px;
     text-align: center;
     word-wrap: break-word; /* Break long words */
@@ -209,7 +313,6 @@
 
 .home-description {
     font-size: clamp(1rem, 2.5vw, 1.2rem); /* Responsive font size */
-    color: #ffffff;
     text-shadow: 1px 1px 2px rgba(43, 43, 68, 0.8);
     margin-bottom: 30px;
     max-width: min(600px, 90%); /* Responsive max-width */
@@ -233,7 +336,6 @@
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-    background-color: #f0f4f8;
     width: min(80%, 100vw); /* Prevent overflow */
     max-width: 1200px; /* Set maximum width */
     height: 400px;
@@ -248,26 +350,19 @@
 
 .catalogo-text h2 {
     font-size: 1.8rem;
-    color: #2d3a4b;
     margin-bottom: 20px;
 }
 
 .catalogo-text #ver-catalogo {
     text-decoration: none;
-    color: #ffffff;
     font-weight: bold;
     font-size: 1.2rem;
     padding: 8px 16px;
-    background-color: #2d3a4b;
     border-radius: 4px;
     transition: color 0.2s, background-color 0.2s;
     display: inline-block;
 }
 
-.catalogo-text #ver-catalogo:hover {
-    color: #4f8cff;
-    background-color: #2d415b;
-}
 
 .catalogo-image {
     width: 50%;
@@ -280,6 +375,7 @@
 .catalogo-image img {
     width: 100%;
     height: 100%;
+    object-position: 0px; /* Adjust vertical position */
     object-fit: cover;
     border-radius: 8px;
 }
@@ -290,7 +386,6 @@
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-    background-color: #c39090;
     width: min(80%, 100vw); /* Prevent overflow */
     max-width: 1200px; /* Set maximum width */
     height: 400px;
@@ -329,7 +424,6 @@
     left: 50%;
     transform: translateX(-50%);
     color: #fff;
-    background: rgba(45, 58, 75, 0.85);
     padding: 8px 16px;
     border-radius: 6px;
     font-size: 1.1rem;
@@ -350,7 +444,6 @@
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-    background-color: #f0f4f8;
     width: min(80%, 100vw);
     max-width: 1200px;
     height: auto; /* Cambiar de altura fija a auto */
@@ -369,13 +462,11 @@
 
 .puntos-text h2 {
     font-size: 1.8rem;
-    color: #2d3a4b;
     margin-bottom: 20px;
 }
 
 .puntos-text p {
     font-size: 1.1rem;
-    color: #555;
     line-height: 1.6;
 }
 
@@ -397,8 +488,6 @@
 
 .footer {
     width: 100%;
-    background-color: #2d3a4b;
-    color: #ffffff;
     padding: 20px 0;
     display: flex;
     flex-direction: row;
@@ -431,8 +520,6 @@
     width: 100%;
     height: 40px;
     text-align: center;
-    background-color: #482727;
-    color: #ffffff;
     font-size: 0.9rem;
     position: relative;
 }

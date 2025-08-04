@@ -61,6 +61,11 @@
     background: linear-gradient(90deg, #0056b3 60%, #007bff 100%);
 }
 
+.register-button:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+}
+
 .register-link {
     color: #3182ce;
     text-decoration: none;
