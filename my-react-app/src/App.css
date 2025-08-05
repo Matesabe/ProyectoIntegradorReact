@@ -1,5 +1,15 @@
+:root {
+    --field-drab: #73683bff;
+    --field-drab-2: #675d35;
+    --caf-noir: #583e23ff;
+    --gunmetal: #13262fff;
+    --khaki: #b0a084ff;
+    --lavender-web: #e9e6ffff;
+    --gradient-main: linear-gradient(135deg, var(--field-drab) 0%, var(--caf-noir) 25%, var(--gunmetal) 50%, var(--khaki) 75%, var(--lavender-web) 100%);
+}
+
 body{
-  background: linear-gradient(135deg, #e0eafc 0%, #dea2a2 100%);
+  background: var(--gradient-main);
   min-height: 100vh;
   font-family: 'Segoe UI', Arial, sans-serif;
   scroll-behavior: smooth;

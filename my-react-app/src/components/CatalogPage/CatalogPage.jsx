@@ -6,6 +6,7 @@ import sargaLogo from '../../img/sargaLogo.png';
 import userIcon from '../../img/Home/user_icon.png';
 import { onLogout } from '../../app/slices/userSlice';
 import { fetchMistralProducts } from '../../app/slices/productsSlice';
+import placeholder from '../../img/Catalog/placeholder.jpg';
 
 const CatalogPage = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -14,6 +15,84 @@ const CatalogPage = () => {
     const { mistralProducts, loading, error, lastFetch } = useSelector(state => state.productsSlice);
     const navigateTo = useNavigate();
     const dispatch = useDispatch();
+
+    
+
+    //filtros de busqueda
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedGender, setSelectedGender] = useState('');
+    const [selectedBrand, setSelectedBrand] = useState('');
+    const [filteredProducts, setFilteredProducts] = useState(mistralProducts);
+
+    useEffect(() => {
+        // Filtrar productos cuando cambie el término de búsqueda o los productos
+        const filtered = mistralProducts.filter(product =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            (selectedCategory ? product.type?.toLowerCase().includes(selectedCategory.toLowerCase()) : true) &&
+            (selectedGender ? product.genre?.toLowerCase().includes(selectedGender.toLowerCase()) : true) &&
+            (selectedBrand ? product.brand?.toLowerCase().includes(selectedBrand.toLowerCase()) : true)
+        );
+        setFilteredProducts(filtered);
+    }, [searchTerm, mistralProducts, selectedCategory, selectedGender, selectedBrand]);
+
+    //categorias
+    // Crear categorías a partir de la primera palabra del atributo 'type' de cada producto
+    const categories = Array.from(
+        new Set(
+            mistralProducts
+                .map(product => product.type?.split(' ')[0]?.toLowerCase())
+                .filter(Boolean)
+        )
+    );
+
+    const loadCategoriesOptions = () => {
+        return categories.map((category, index) => (
+            <option key={index} value={category}>
+                {firstLetterUppercase(category)}
+            </option>
+        ));
+    };
+
+    const brands = Array.from(
+        new Set(
+            mistralProducts
+                .map(product => product.brand?.toLowerCase())
+                .filter(Boolean)
+        )
+    );
+
+    const loadBrandsOptions = () => {
+        return brands.map((brand, index) => (
+            <option key={index} value={brand}>
+                {firstLetterUppercase(brand)}
+            </option>
+        ));
+    };
+
+    const firstLetterUppercase = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    };
+
+    // Función para navegar a la página del producto
+    const goToProductPage = (productId) => {
+        navigateTo(`/product/${productId}`);
+    };
+
+    const generateProductDivs = () => {
+        return filteredProducts.map(product => (
+            <div 
+                key={product.id} 
+                className="product-card"
+                onClick={() => goToProductPage(product.id)}
+                style={{ cursor: 'pointer' }} // Indicar que es clickeable
+            >
+                <img src={placeholder} alt={product.name} />
+                <h3>{product.name}</h3>
+                <span>${product.price}</span>
+            </div>
+        ));
+    };
 
     const userLoged = userData && userData.token;
 
@@ -64,7 +143,6 @@ const CatalogPage = () => {
                 setIsDropdownOpen(false);
             }
         };
-
         document.addEventListener('click', handleClickOutside);
         return () => {
             document.removeEventListener('click', handleClickOutside);
@@ -74,8 +152,7 @@ const CatalogPage = () => {
     useEffect(() => {
         // Solo cargar si no hay productos o si han pasado más de 5 minutos
         const shouldFetch = !mistralProducts.length || 
-                           (Date.now() - lastFetch > 5 * 60 * 1000);
-        
+        (Date.now() - lastFetch > 5 * 60 * 1000);
         if (shouldFetch) {
             dispatch(fetchMistralProducts());
         }
@@ -110,10 +187,40 @@ const CatalogPage = () => {
                         </ul>
                     </nav>
                 </header>
-                <div>
-            {mistralProducts.map(product => (
-                <div key={product.id}>{product.name}</div>
-            ))}
+        <div>
+            <div className='catalog-filter'>
+                <div className='filter-container'>
+                <div className='filter'>
+                    <label htmlFor="buscar">Buscar:</label>
+                    <input type="text" id="buscar" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Buscar productos..." />
+                </div>
+                <div className='filter'>
+                    <label htmlFor="genero">Género:</label>
+                    <select value={selectedGender} id="genero" onChange={(e) => setSelectedGender(e.target.value)}>
+                        <option value="">Todos</option>
+                        <option value="hombre">Masculino</option>
+                        <option value="dama">Femenino</option>
+                    </select>
+                </div>
+                <div className='filter'>
+                    <label htmlFor="categoria">Categoría:</label>
+                    <select value={selectedCategory} id="categoria" onChange={(e) => setSelectedCategory(e.target.value)}>
+                        <option value="">Todas</option>
+                        {loadCategoriesOptions()}
+                    </select>
+                </div>
+                <div className='filter'>
+                    <label htmlFor="marca">Marca:</label>
+                    <select value={selectedBrand} id="marca" onChange={(e) => setSelectedBrand(e.target.value)}>
+                        <option value="">Todas</option>
+                        {loadBrandsOptions()}
+                    </select>
+                </div>
+                </div>
+            </div>
+            <div className="product-grid">
+                {generateProductDivs()}
+            </div>
         </div>
         </div>
     );
