@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './CatalogPage.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import sargaLogo from '../../img/sargaLogo.png';
-import userIcon from '../../img/Home/user_icon.png';
+import sargaLogo from '/img/sargaLogo.png';
+import userIcon from '/img/Home/user_icon.png';
 import { onLogout } from '../../app/slices/userSlice';
 import { fetchMistralProducts } from '../../app/slices/productsSlice';
-import placeholder from '../../img/Catalog/placeholder.jpg';
+import placeholder from '/img/Catalog/placeholder.jpg';
 
 const CatalogPage = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -85,7 +85,7 @@ const CatalogPage = () => {
                 onClick={() => goToProductPage(product.id)}
                 style={{ cursor: 'pointer' }} // Indicar que es clickeable
             >
-                <img src={placeholder} alt={product.name} />
+                <img src={"/img/Catalog/placeholder.jpg"} alt={product.name} />
                 <h3>{product.name}</h3>
                 <span>${product.price}</span>
             </div>

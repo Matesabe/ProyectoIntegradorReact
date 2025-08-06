@@ -1,5 +1,4 @@
 import React, { use } from 'react';
-import ExampleComponent from './components/ExampleComponent';
 import { useState, useEffect } from 'react'
 import {HomePage} from './components/HomePage/HomePage';
 import LoginPage from './components/LoginPage/LoginPage';

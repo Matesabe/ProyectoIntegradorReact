@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getComprasByUserId } from "../../services/api";
 import "./ProfilePage.css";
-import sargaLogo from "../../img/sargaLogo.png";
-import userIcon from "../../img/Home/user_icon.png";
+import sargaLogo from "/img/sargaLogo.png";
+import userIcon from "/img/Home/user_icon.png";
 import { onLogout } from '../../app/slices/userSlice';
 
 const ProfilePage = () => {

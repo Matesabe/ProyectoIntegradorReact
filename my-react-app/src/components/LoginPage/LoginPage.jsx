@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { onLogin } from "../../app/slices/userSlice";
-import sargaLogo from "../../img/sargaLogo.png";
+import sargaLogo from "/img/sargaLogo.png";
 import {BlinkBlur} from "react-loading-indicators"
 import "./LoginPage.css";
 

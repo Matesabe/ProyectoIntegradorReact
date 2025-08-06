@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { onLogin } from "../../app/slices/userSlice";
 import { registrarse, login } from "../../services/api";
 import "./RegistrarsePage.css";
-import sargaLogo from "../../img/sargaLogo.png";
+import sargaLogo from "/img/sargaLogo.png";
 import {BlinkBlur} from "react-loading-indicators"
 
 const RegistrarsePage = () => {

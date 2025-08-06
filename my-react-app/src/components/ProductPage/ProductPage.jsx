@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import sargaLogo from "../../img/sargaLogo.png";
-import userIcon from "../../img/Home/user_icon.png";
-import placeholder from "../../img/Catalog/placeholder.jpg";
+import sargaLogo from "/img/sargaLogo.png";
+import userIcon from "/img/Home/user_icon.png";
+import placeholder from "/img/Catalog/placeholder.jpg";
 import { getSubProducts, getWarehouses } from "../../services/api";
 import { fetchWarehouses } from "../../app/slices/warehousesSlice";
 import { onLogout } from "../../app/slices/userSlice";
