@@ -126,7 +126,7 @@ const ProfilePage = () => {
     <div className="profile-page">
       <header className={`home-header ${isNavOpen ? "nav-open" : ""}`}>
         <figure>
-          <a href="/">
+          <a id="sarga-logo" href="/">
             <img src={sargaLogo} alt="Sarga Logo" />
           </a>
         </figure>

@@ -1,4 +1,14 @@
 /* Estilos base */
+:root {
+    --field-drab: #73683bff;
+    --field-drab-2: #675d35;
+    --caf-noir: #583e23ff;
+    --gunmetal: #13262fff;
+    --khaki: #b0a084ff;
+    --lavender-web: #e9e6ffff;
+    --gradient-main: linear-gradient(135deg, var(--field-drab) 0%, var(--caf-noir) 25%, var(--gunmetal) 50%, var(--khaki) 75%, var(--lavender-web) 100%);
+}
+
 .profile-page {
     font-family: 'Arial', sans-serif;
     color: #2d3a4b;
@@ -11,7 +21,7 @@
     width: 100vw;
     box-sizing: border-box;
     min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c39090 20%, #f5f7fa 100%);
+    background: var(--gradient-main);
 }
 
 /* Header y navegación */
@@ -87,9 +97,6 @@
     transition: all 0.3s ease;
 }
 
-.home-header a:hover {
-    background-color: rgba(79, 140, 255, 0.1);
-}
 
 /* Botón hamburguesa */
 .mobile-menu-btn {

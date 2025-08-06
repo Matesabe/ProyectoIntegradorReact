@@ -16,8 +16,6 @@ const CatalogPage = () => {
     const navigateTo = useNavigate();
     const dispatch = useDispatch();
 
-    
-
     //filtros de busqueda
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -150,9 +148,9 @@ const CatalogPage = () => {
     }, [isDropdownOpen]);
 
     useEffect(() => {
-        // Solo cargar si no hay productos o si han pasado más de 5 minutos
+        // Solo cargar si no hay productos o si han pasado más de 10 minutos
         const shouldFetch = !mistralProducts.length || 
-        (Date.now() - lastFetch > 5 * 60 * 1000);
+        (Date.now() - lastFetch > 10 * 60 * 1000);
         if (shouldFetch) {
             dispatch(fetchMistralProducts());
         }

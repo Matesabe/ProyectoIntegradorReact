@@ -109,4 +109,50 @@ const getMistralProducts = async () => {
   }
 };
 
-export {login, registrarse, getComprasByUserId, getMistralProducts};
+const getSubProducts = async (productCode) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/subproducts/by-productCode/${productCode}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener los subproductos");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener los subproductos");
+  }
+};
+
+const getWarehouses = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/warehouses`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener los almacenes");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener los almacenes");
+  }
+};
+
+export {login, registrarse, getComprasByUserId, getMistralProducts, getSubProducts, getWarehouses};
