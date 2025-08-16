@@ -85,7 +85,7 @@ const CatalogPage = () => {
                 onClick={() => goToProductPage(product.id)}
                 style={{ cursor: 'pointer' }} // Indicar que es clickeable
             >
-                <img src={"/img/Catalog/placeholder.jpg"} alt={product.name} />
+                <img src={`/img/Catalog/${product.genre}/${product.type?.split(' ')[0]?.toLowerCase()}/${product.productCode}.webp`} alt={product.name} />
                 <h3>{product.name}</h3>
                 <span>${product.price}</span>
             </div>
@@ -93,10 +93,22 @@ const CatalogPage = () => {
     };
 
     const userLoged = userData && userData.token;
+    const userRol = userData ? userData.userData.rol : null;
 
     const renderNavLinks = () => {
         if (userLoged) {
             return (
+                <>
+                {userRol === 'Administrator' || userRol === 'Seller' ? (
+                        <li>
+                            <a href="/canje">Canje de Puntos</a>
+                        </li>
+                    ) : null}
+                    {userRol === 'Administrator' ? (
+                        <li>
+                            <a href="/admin">Administración</a>
+                        </li>
+                    ) : null}
                 <li className="user-icon">
                     <div onClick={toggleUserDropdown} className="user-icon-container">
                         <img src={userIcon} alt="Usuario" style={{ width: 32, height: 32, borderRadius: '50%' }} />
@@ -107,6 +119,7 @@ const CatalogPage = () => {
                         <li><a onClick={_onLogout} href="/">Cerrar Sesión</a></li>
                     </ul>
                 </li>
+                </>
             );
         }
         return (

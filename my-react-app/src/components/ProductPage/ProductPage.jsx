@@ -127,29 +127,43 @@ const ProductPage = () => {
     return <div>Cargando producto...</div>;
   }
 
+  const userRol = userData ? userData.userData.rol : null;
+
   const renderNavLinks = () => {
     if (userLoged) {
       return (
-        <li className="user-icon">
-          <div onClick={toggleUserDropdown} className="user-icon-container">
-            <img
-              src={userIcon}
-              alt="Usuario"
-              style={{ width: 32, height: 32, borderRadius: "50%" }}
-            />
-            <span className="user-name">{userData.userData.name}</span>
-          </div>
-          <ul className={`user-dropdown ${isDropdownOpen ? "show" : ""}`}>
+        <>
+          {userRol === "Administrator" || userRol === "Seller" ? (
             <li>
-              <a href="/profile">Perfil</a>
+              <a href="/canje">Canje de Puntos</a>
             </li>
+          ) : null}
+          {userRol === "Administrator" ? (
             <li>
-              <a onClick={_onLogout} href="/">
-                Cerrar Sesión
-              </a>
+              <a href="/admin">Administración</a>
             </li>
-          </ul>
-        </li>
+          ) : null}
+          <li className="user-icon">
+            <div onClick={toggleUserDropdown} className="user-icon-container">
+              <img
+                src={userIcon}
+                alt="Usuario"
+                style={{ width: 32, height: 32, borderRadius: "50%" }}
+              />
+              <span className="user-name">{userData.userData.name}</span>
+            </div>
+            <ul className={`user-dropdown ${isDropdownOpen ? "show" : ""}`}>
+              <li>
+                <a href="/profile">Perfil</a>
+              </li>
+              <li>
+                <a onClick={_onLogout} href="/">
+                  Cerrar Sesión
+                </a>
+              </li>
+            </ul>
+          </li>
+        </>
       );
     }
     return (
@@ -230,29 +244,31 @@ const ProductPage = () => {
         <button onClick={() => navigate("/catalog")} className="back-button">
           ←
         </button>
-          <div className="store-filters">
-            <span className="store-filter-text">Tienda:</span>
-            <select
-              onChange={(e) => {
-                const selectedWarehouse = e.target.value;
-                filterSubproductsByWarehouse(selectedWarehouse);
-              }}
-              defaultValue=""
-            >
-              <option value="">Todas las Tiendas</option>
-              {warehouses.map((warehouse) => (
-                <option key={warehouse.id} value={warehouse.id}>
-                  {warehouse.name}
-                </option>
-              ))}
-            </select>
+        <div className="store-filters">
+          <span className="store-filter-text">Tienda:</span>
+          <select
+            onChange={(e) => {
+              const selectedWarehouse = e.target.value;
+              filterSubproductsByWarehouse(selectedWarehouse);
+            }}
+            defaultValue=""
+          >
+            <option value="">Todas las Tiendas</option>
+            {warehouses.map((warehouse) => (
+              <option key={warehouse.id} value={warehouse.id}>
+                {warehouse.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
       <div className="product-details">
         <div className="product-image">
           <img
-            src={product.image || "/src/img/Catalog/placeholder.jpg"}
+            src={`/img/Catalog/${product.genre}/${product.type
+              ?.split(" ")[0]
+              ?.toLowerCase()}/${product.productCode}.webp`}
             alt={product.name}
           />
         </div>

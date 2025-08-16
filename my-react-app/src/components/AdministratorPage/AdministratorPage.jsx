@@ -1,14 +1,13 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import "./AdministratorPage.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getComprasByUserId } from "../../services/api";
-import "./ProfilePage.css";
 import sargaLogo from "/img/sargaLogo.png";
 import userIcon from "/img/Home/user_icon.png";
 import { onLogout } from "../../app/slices/userSlice";
+import {getPromotions} from "../../services/api";
 
-const ProfilePage = () => {
+const AdministratorPage = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const userData = useSelector((state) => state.userSlice.userData);
@@ -16,44 +15,39 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const userLoged = userData && userData.token;
+  const userRol = userData ? userData.userData.rol : null;
   const userToken = userData ? userData.token : null;
-  const isAdmin =
-    userData && userData.userData && userData.userData.Role === "Administrator";
-  const [comprasCliente, setComprasCliente] = useState([]);
+
+  const [promotions, setPromotions] = useState([]);
 
   useEffect(() => {
-    if (userLoged) {
-      getComprasByUserId(userData.userData.id, userToken)
-        .then((compras) => {
-          setComprasCliente(compras);
-          displayCompras(compras);
+    if (userToken) {
+      getPromotions(userToken)
+        .then((data) => {
+          setPromotions(data);
         })
         .catch((error) => {
-          console.error("Error al obtener las compras:", error);
+          console.error("Error al obtener promociones:", error);
         });
     }
-  }, [userLoged, userData.userData.id]);
+  }, [userToken]);
 
-  const displayCompras = (compras) => {
-    const comprasList = document.querySelector(".purchase-history-list");
-    if (!compras || compras.length === 0) {
-      comprasList.innerHTML = "<p>No tienes compras registradas.</p>";
-      return;
+  const renderPromotions = () => {
+    if (promotions.length > 0) {
+      return (
+        <ul>
+          {promotions.map((promo) => (
+            <li className="promotion-item" key={promo.id}>
+              <h4>{promo.description}</h4>
+              <p>{promo.type}</p>
+              <p>{promo.id}</p>
+            </li>
+          ))}
+        </ul>
+      );
     }
-    comprasList.innerHTML = ""; // Limpiar la lista antes de mostrar las nuevas compras
-    compras.forEach((compra) => {
-      const compraItem = document.createElement("div");
-      compraItem.className = "compra-item";
-      compraItem.innerHTML = `
-        <p>ID: ${compra.id}</p>
-        <p>Fecha: ${new Date(compra.fecha).toLocaleDateString()}</p>
-        <p>Total: $${compra.total}</p>
-      `;
-      comprasList.appendChild(compraItem);
-    });
+    return <p>No hay promociones disponibles.</p>;
   };
-
-  const userRol = userData ? userData.userData.rol : null;
 
   const renderNavLinks = () => {
     if (userLoged) {
@@ -118,7 +112,6 @@ const ProfilePage = () => {
     e.preventDefault();
     dispatch(onLogout());
     setIsDropdownOpen(false); // Cerrar dropdown después del logout
-    alert("Logout exitoso");
     navigateTo("/");
   };
 
@@ -137,10 +130,10 @@ const ProfilePage = () => {
   }, [isDropdownOpen]);
 
   return (
-    <div className="profile-page">
+    <div className="admin-container">
       <header className={`home-header ${isNavOpen ? "nav-open" : ""}`}>
         <figure>
-          <a id="sarga-logo" href="/">
+          <a href="/">
             <img src={sargaLogo} alt="Sarga Logo" />
           </a>
         </figure>
@@ -155,11 +148,10 @@ const ProfilePage = () => {
           <span></span>
           <span></span>
         </button>
-
         <nav>
           <ul>
             <li>
-              <a href="/">Catálogo</a>
+              <a href="/catalog">Catálogo</a>
             </li>
             <li>
               <a href="/">Puntos Sarga</a>
@@ -168,21 +160,40 @@ const ProfilePage = () => {
           </ul>
         </nav>
       </header>
-      <div className="profile-info">
-        <h1>{userData.userData.name}</h1>
-        <p>Puntos Sarga: {userData.userData.points}</p>
-        <p>Email: {userData.userData.email}</p>
-        <p>Teléfono: {userData.userData.phone}</p>
-      </div>
-      <div className="purchase-history">
-        <div className="purchase-history-content">
-          <h2>Mis Compras</h2>
-          <p>Aquí puedes ver tus compras recientes.</p>
+      <div className="acciones-admin">
+        <div className="promociones">
+          <h2>Promociones</h2>
+          <div className="crear-promociones">
+            <h3>Crear Nueva Promoción</h3>
+            <p>Acceder para crear una nueva promoción de puntos Sarga</p>
+            <button>
+              <a href="/crear-promocion">Crear Promoción</a>
+            </button>
+          </div>
+          <div className="gestionar-promociones">
+            <h3>Gestionar Promociones</h3>
+            <p>Acceder para ver y gestionar las promociones existentes</p>
+            {renderPromotions()}
+          </div>
         </div>
-        <div className="purchase-history-list"></div>
+        <div className="reportes">
+          <h2>Reportes</h2>
+          <div className="reportes-ventas">
+            <h3>Reportes Importación Compras</h3>
+            <button>Ver Reportes</button>
+          </div>
+          <div className="reportes-productos">
+            <h3>Reportes Importación Productos</h3>
+            <button>Ver Reportes</button>
+          </div>
+          <div className="reporte-canjes">
+            <h3>Reporte Canjes</h3>
+            <button>Ver Reporte</button>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export { ProfilePage };
+export default AdministratorPage;

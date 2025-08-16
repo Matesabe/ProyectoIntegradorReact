@@ -1,0 +1,434 @@
+/* Variables CSS para consistencia */
+:root {
+    --field-drab: #73683bff;
+    --field-drab-2: #675d35;
+    --caf-noir: #583e23ff;
+    --gunmetal: #13262fff;
+    --khaki: #b0a084ff;
+    --lavender-web: #e9e6ffff;
+    --gradient-main: linear-gradient(135deg, var(--field-drab) 0%, var(--caf-noir) 25%, var(--gunmetal) 50%, var(--khaki) 75%, var(--lavender-web) 100%);
+    --primary-blue: #4f8cff;
+    --success-green: #28a745;
+    --error-red: #dc3545;
+    --warning-orange: #fd7e14;
+    --light-gray: #f8f9fa;
+    --dark-text: #2d3a4b;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --box-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s ease;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --card-hover-bg: rgba(255, 255, 255, 0.98);
+}
+
+/* Global styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Container principal */
+.admin-container {
+    font-family: 'Arial', sans-serif;
+    color: var(--dark-text);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--gradient-main);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Sección de acciones administrativas */
+.acciones-admin {
+    flex: 1;
+    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Secciones principales */
+.promociones,
+.reportes {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.promociones:hover,
+.reportes:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-hover);
+    background: var(--card-hover-bg);
+}
+
+/* Efecto de brillo en hover */
+.promociones::before,
+.reportes::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.promociones:hover::before,
+.reportes:hover::before {
+    left: 100%;
+}
+
+/* Títulos principales */
+.promociones h2,
+.reportes h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--dark-text);
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.promociones h2::after,
+.reportes h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--khaki));
+    border-radius: 2px;
+}
+
+/* Subsecciones */
+.crear-promociones,
+.gestionar-promociones,
+.ver-reportes {
+    background: rgba(79, 140, 255, 0.05);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    margin-bottom: 25px;
+    border-left: 4px solid var(--primary-blue);
+    transition: var(--transition);
+    position: relative;
+}
+
+.crear-promociones:hover,
+.gestionar-promociones:hover,
+.ver-reportes:hover {
+    background: rgba(79, 140, 255, 0.1);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(79, 140, 255, 0.2);
+}
+
+/* Títulos de subsecciones */
+.crear-promociones h3,
+.gestionar-promociones h3,
+.ver-reportes h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--dark-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.crear-promociones h3::before {
+    content: '➕';
+    font-size: 1.2rem;
+}
+
+.gestionar-promociones h3::before {
+    content: '⚙️';
+    font-size: 1.2rem;
+}
+
+.ver-reportes h3::before {
+    content: '📊';
+    font-size: 1.2rem;
+}
+
+/* Párrafos descriptivos */
+.crear-promociones p,
+.gestionar-promociones p,
+.ver-reportes p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Botones */
+button {
+    background: linear-gradient(135deg, var(--primary-blue), #3a7bd5);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--box-shadow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.3s;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 140, 255, 0.3);
+    background: linear-gradient(135deg, #3a7bd5, var(--primary-blue));
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Lista de promociones */
+.gestionar-promociones ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.promotion-item {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    border-left: 4px solid var(--success-green);
+    position: relative;
+}
+
+.promotion-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    background: #f8f9fa;
+}
+
+.promotion-item::before {
+    content: '🎯';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+}
+
+.promotion-item h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--dark-text);
+}
+
+.promotion-item p {
+    font-size: 1rem;
+    color: #666;
+    margin: 8px 0;
+    padding: 5px 10px;
+    background: rgba(40, 167, 69, 0.1);
+    border-radius: 4px;
+    border-left: 2px solid var(--success-green);
+}
+
+.promotion-item p:last-child {
+    background: rgba(79, 140, 255, 0.1);
+    border-left-color: var(--primary-blue);
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+}
+
+/* Mensaje cuando no hay promociones */
+.gestionar-promociones > p {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid var(--error-red);
+    border-radius: 6px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* Sección de reportes específica */
+.reportes {
+    border-left: 4px solid var(--warning-orange);
+}
+
+.ver-reportes {
+    border-left-color: var(--warning-orange);
+    background: rgba(253, 126, 20, 0.05);
+}
+
+.ver-reportes:hover {
+    background: rgba(253, 126, 20, 0.1);
+    box-shadow: 0 4px 12px rgba(253, 126, 20, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .acciones-admin {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .acciones-admin {
+        padding: 20px 16px;
+        gap: 20px;
+    }
+
+    .promociones,
+    .reportes {
+        padding: 20px;
+    }
+
+    .promociones h2,
+    .reportes h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .crear-promociones,
+    .gestionar-promociones,
+    .ver-reportes {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .crear-promociones h3,
+    .gestionar-promociones h3,
+    .ver-reportes h3 {
+        font-size: 1.3rem;
+    }
+
+    .promotion-item {
+        padding: 15px;
+    }
+
+    .promotion-item h4 {
+        font-size: 1.2rem;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .acciones-admin {
+        padding: 16px 12px;
+    }
+
+    .promociones,
+    .reportes {
+        padding: 16px;
+    }
+
+    .promociones h2,
+    .reportes h2 {
+        font-size: 1.6rem;
+    }
+
+    .crear-promociones,
+    .gestionar-promociones,
+    .ver-reportes {
+        padding: 16px;
+    }
+
+    .promotion-item {
+        padding: 12px;
+    }
+
+    .promotion-item::before {
+        top: 10px;
+        right: 10px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Animaciones adicionales */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.promociones,
+.reportes {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.reportes {
+    animation-delay: 0.2s;
+}
+
+/* Scrollbar personalizada */
+.gestionar-promociones::-webkit-scrollbar {
+    width: 6px;
+}
+
+.gestionar-promociones::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.gestionar-promociones::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: 3px;
+}
+
+.gestionar-promociones::-webkit-scrollbar-thumb:hover {
+    background: #3a7bd5;
+}

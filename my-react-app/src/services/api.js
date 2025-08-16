@@ -155,4 +155,81 @@ const getWarehouses = async () => {
   }
 };
 
-export {login, registrarse, getComprasByUserId, getMistralProducts, getSubProducts, getWarehouses};
+const getUserByCi = async (ci, userToken) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/users/getByCi/${ci}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+        "Authorization": `Bearer ${userToken}`
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener el usuario");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener el usuario");
+  }
+};
+
+const createRedemption = async (redemptionData, userToken) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/redemptions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+        "Authorization": `Bearer ${userToken}`
+      },
+      body: JSON.stringify({
+        Id: 0,
+        ClientId: redemptionData.clientId,
+        PointsUsed: redemptionData.points
+      })
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al crear el canje");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al crear el canje");
+  }
+};
+
+const getPromotions = async (userToken) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/promotions`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+        "Authorization": `Bearer ${userToken}`
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener las promociones");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener las promociones");
+  }
+};
+
+export {login, registrarse, getComprasByUserId, getMistralProducts, getSubProducts, getWarehouses, getUserByCi, createRedemption, getPromotions};

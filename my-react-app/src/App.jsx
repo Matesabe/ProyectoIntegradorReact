@@ -6,7 +6,11 @@ import RegistrarsePage from './components/RegistrarsePage/RegistrarsePage';
 import { ProfilePage } from './components/ProfilePage/ProfilePage';
 import {CatalogPage} from './components/CatalogPage/CatalogPage';
 import {ProductPage} from './components/ProductPage/ProductPage';
+import {CanjePage} from './components/CanjePage/CanjePage';
+import AdministratorPage from './components/AdministratorPage/AdministratorPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import AdminRoute from './components/AdminRoute/AdminRoute';
+import AdminSellerRoute from './components/AdminSellerRoute/AdminSellerRoute';
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
@@ -30,13 +34,13 @@ function App() {
     return (
         <div className='App'>
             <Routes>
-                
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegistrarsePage />} />
                 <Route path="/catalog" element={<CatalogPage />} />
                 <Route path="/product/:id" element={<ProductPage />} />
-                {/* Protected route for ProfilePage */}
+                
+                {/* Rutas protegidas para usuarios logueados */}
                 <Route
                     path="/profile"
                     element={
@@ -45,6 +49,26 @@ function App() {
                         </PrivateRoute>
                     }
                 />    
+                
+                {/* Ruta protegida solo para vendedores y administradores */}
+                <Route
+                    path="/canje"
+                    element={
+                        <AdminSellerRoute>
+                            <CanjePage />
+                        </AdminSellerRoute>
+                    }
+                />
+
+                {/* Ruta protegida solo para administradores */}
+                <Route
+                    path="/admin"
+                    element={
+                        <AdminRoute>
+                            <AdministratorPage />
+                        </AdminRoute>
+                    }
+                />
                 
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
