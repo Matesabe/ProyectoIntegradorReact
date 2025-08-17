@@ -85,7 +85,7 @@ const CatalogPage = () => {
                 onClick={() => goToProductPage(product.id)}
                 style={{ cursor: 'pointer' }} // Indicar que es clickeable
             >
-                <img src={`public/img/Catalog/${product.genre}/${product.type?.split(' ')[0]?.toLowerCase()}/${product.productCode}.webp`} alt={product.name} />
+                <img src={`/img/Catalog/${product.genre}/${product.type?.split(' ')[0]?.toLowerCase()}/${product.productCode}.webp`} alt={product.name} />
                 <h3>{product.name}</h3>
                 <span>${product.price}</span>
             </div>
