@@ -78,19 +78,29 @@ const CatalogPage = () => {
     };
 
     const generateProductDivs = () => {
-        return filteredProducts.map(product => (
-            <div 
-                key={product.id} 
-                className="product-card"
-                onClick={() => goToProductPage(product.id)}
-                style={{ cursor: 'pointer' }} // Indicar que es clickeable
-            >
-                <img src={`/img/Catalog/${product.genre}/${product.type?.split(' ')[0]?.toLowerCase()}/${product.productCode}.webp`} alt={product.name} />
-                <h3>{product.name}</h3>
-                <span>${product.price}</span>
-            </div>
-        ));
-    };
+    return filteredProducts.map(product => (
+        <div 
+            key={product.id} 
+            className="product-card"
+            onClick={() => goToProductPage(product.id)}
+            style={{ cursor: 'pointer' }}
+        >
+            <img 
+                src={`/img/Catalog/${product.genre}/${product.type?.split(' ')[0]?.toLowerCase()}/${product.productCode}.webp`}
+                alt={product.name}
+                onError={(e) => {
+                    console.warn(`Imagen no encontrada: ${e.target.src}`);
+                    e.target.src = '/img/Catalog/placeholder.jpg'; // Fallback al placeholder
+                }}
+                onLoad={() => {
+                    console.log(`Imagen cargada correctamente para: ${product.name}`);
+                }}
+            />
+            <h3>{product.name}</h3>
+            <span>${product.price}</span>
+        </div>
+    ));
+};
 
     const userLoged = userData && userData.token;
     const userRol = userData ? userData.userData.rol : null;
