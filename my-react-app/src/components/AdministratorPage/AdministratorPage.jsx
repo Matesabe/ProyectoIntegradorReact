@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import sargaLogo from "/img/sargaLogo.png";
 import userIcon from "/img/Home/user_icon.png";
 import { onLogout } from "../../app/slices/userSlice";
-import {getPromotions} from "../../services/api";
+import { fetchPromotions, setPromotions } from "../../app/slices/promotionsSlice";
 
 const AdministratorPage = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const userData = useSelector((state) => state.userSlice.userData);
+  const { promotions, loading, error } = useSelector((state) => state.promotionsSlice);
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,35 +19,49 @@ const AdministratorPage = () => {
   const userRol = userData ? userData.userData.rol : null;
   const userToken = userData ? userData.token : null;
 
-  const [promotions, setPromotions] = useState([]);
-
   useEffect(() => {
     if (userToken) {
-      getPromotions(userToken)
-        .then((data) => {
-          setPromotions(data);
-        })
-        .catch((error) => {
-          console.error("Error al obtener promociones:", error);
-        });
+      // Usar el thunk para cargar promociones
+      dispatch(fetchPromotions(userToken));
     }
-  }, [userToken]);
+  }, [userToken, dispatch]);
 
   const renderPromotions = () => {
+    if (loading) {
+      return <p>Cargando promociones...</p>;
+    }
+
+    if (error) {
+      return <p>Error al cargar promociones: {error}</p>;
+    }
+
     if (promotions.length > 0) {
       return (
         <ul>
           {promotions.map((promo) => (
-            <li className="promotion-item" key={promo.id}>
+            <div className="promotion-item" 
+            key={promo.id}
+            onClick={() => goToUpdatePromoPage(promo.id)}>
               <h4>{promo.description}</h4>
               <p>{promo.type}</p>
-              <p>{promo.id}</p>
-            </li>
+              <p>ID: {promo.id}</p>
+            </div>
           ))}
         </ul>
       );
     }
     return <p>No hay promociones disponibles.</p>;
+  };
+
+  const goToUpdatePromoPage = (promoId) => {
+    navigateTo(`/admin/promotions/update/${promoId}`);
+  };
+
+  // Función para actualizar promociones manualmente (opcional)
+  const handleRefreshPromotions = () => {
+    if (userToken) {
+      dispatch(fetchPromotions(userToken));
+    }
   };
 
   const renderNavLinks = () => {
@@ -111,11 +126,10 @@ const AdministratorPage = () => {
   const _onLogout = (e) => {
     e.preventDefault();
     dispatch(onLogout());
-    setIsDropdownOpen(false); // Cerrar dropdown después del logout
+    setIsDropdownOpen(false);
     navigateTo("/");
   };
 
-  // Cerrar dropdown cuando se haga click fuera de él
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isDropdownOpen && !event.target.closest(".user-icon")) {
@@ -173,6 +187,9 @@ const AdministratorPage = () => {
           <div className="gestionar-promociones">
             <h3>Gestionar Promociones</h3>
             <p>Acceder para ver y gestionar las promociones existentes</p>
+            <button className="actualizar-promos-btn" onClick={handleRefreshPromotions} type="button">
+              Actualizar Lista
+            </button>
             {renderPromotions()}
           </div>
         </div>

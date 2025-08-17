@@ -24,4 +24,4 @@ const AdminSellerRoute = ({ children }) => {
     return children;
 };
 
-export default AdminRoute;
+export default AdminSellerRoute;

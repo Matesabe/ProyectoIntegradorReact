@@ -232,6 +232,24 @@ button a {
     margin: 0;
 }
 
+.actualizar-promos-btn {
+    background: linear-gradient(135deg, var(--primary-blue), #3a7bd5);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    margin: 20px 0;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--box-shadow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
 .promotion-item {
     background: white;
     border-radius: 8px;
@@ -246,7 +264,9 @@ button a {
 .promotion-item:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    background: #f8f9fa;
+    background: var(--lavender-web);
+    border-left-color: var(--primary-blue);
+    cursor: pointer;
 }
 
 .promotion-item::before {

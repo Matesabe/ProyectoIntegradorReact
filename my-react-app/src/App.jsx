@@ -8,6 +8,7 @@ import {CatalogPage} from './components/CatalogPage/CatalogPage';
 import {ProductPage} from './components/ProductPage/ProductPage';
 import {CanjePage} from './components/CanjePage/CanjePage';
 import AdministratorPage from './components/AdministratorPage/AdministratorPage';
+import PromotionUpdatePage from './components/AdministratorPage/PromotionUpdate/PromotionUpdate';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import AdminRoute from './components/AdminRoute/AdminRoute';
 import AdminSellerRoute from './components/AdminSellerRoute/AdminSellerRoute';
@@ -49,7 +50,7 @@ function App() {
                         </PrivateRoute>
                     }
                 />    
-                
+
                 {/* Ruta protegida solo para vendedores y administradores */}
                 <Route
                     path="/canje"
@@ -66,6 +67,15 @@ function App() {
                     element={
                         <AdminRoute>
                             <AdministratorPage />
+                        </AdminRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/promotions/update/:id"
+                    element={
+                        <AdminRoute>
+                            <PromotionUpdatePage />
                         </AdminRoute>
                     }
                 />
