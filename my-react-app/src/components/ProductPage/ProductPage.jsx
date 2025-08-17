@@ -266,10 +266,20 @@ const ProductPage = () => {
       <div className="product-details">
         <div className="product-image">
           <img
-            src={`/img/Catalog/${product.genre}/${product.type
-              ?.split(" ")[0]
-              ?.toLowerCase()}/${product.productCode}.webp`}
+            src={`/img/Catalog/${product.genre?.toUpperCase()}/${product.type?.split(" ")[0]?.toUpperCase()}/${product.productCode}.webp`}
             alt={product.name}
+            onError={(e) => {
+              console.warn(`Imagen no encontrada: ${e.target.src}`);
+              // Intentar con extensión .jpg si .webp falla
+              if (e.target.src.includes('.webp')) {
+                e.target.src = `/img/Catalog/${product.genre?.toUpperCase()}/${product.type?.split(" ")[0]?.toUpperCase()}/${product.productCode}.jpg`;
+              } else {
+                e.target.src = '/img/Catalog/placeholder.jpg'; // Fallback final
+              }
+            }}
+            onLoad={() => {
+              console.log(`Imagen cargada correctamente para: ${product.name}`);
+            }}
           />
         </div>
 
