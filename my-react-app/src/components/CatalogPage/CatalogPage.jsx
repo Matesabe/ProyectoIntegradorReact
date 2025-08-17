@@ -78,28 +78,39 @@ const CatalogPage = () => {
     };
 
     const generateProductDivs = () => {
-    return filteredProducts.map(product => (
-        <div 
-            key={product.id} 
-            className="product-card"
-            onClick={() => goToProductPage(product.id)}
-            style={{ cursor: 'pointer' }}
-        >
-            <img 
-                src={`/img/Catalog/${product.genre}/${product.type?.split(' ')[0]?.toLowerCase()}/${product.productCode}.webp`}
-                alt={product.name}
-                onError={(e) => {
-                    console.warn(`Imagen no encontrada: ${e.target.src}`);
-                    e.target.src = '/img/Catalog/placeholder.jpg'; // Fallback al placeholder
-                }}
-                onLoad={() => {
-                    console.log(`Imagen cargada correctamente para: ${product.name}`);
-                }}
-            />
-            <h3>{product.name}</h3>
-            <span>${product.price}</span>
-        </div>
-    ));
+    return filteredProducts.map(product => {
+        // Convertir género a mayúsculas para coincidir con la estructura de carpetas
+        const genreFolder = product.genre?.toUpperCase();
+        const typeFolder = product.type?.split(' ')[0]?.toUpperCase();
+        
+        return (
+            <div 
+                key={product.id} 
+                className="product-card"
+                onClick={() => goToProductPage(product.id)}
+                style={{ cursor: 'pointer' }}
+            >
+                <img 
+                    src={`/img/Catalog/${genreFolder}/${typeFolder}/${product.productCode}.webp`}
+                    alt={product.name}
+                    onError={(e) => {
+                        console.warn(`Imagen no encontrada: ${e.target.src}`);
+                        // Intentar con extensión .jpg si .webp falla
+                        if (e.target.src.includes('.webp')) {
+                            e.target.src = `/img/Catalog/${genreFolder}/${typeFolder}/${product.productCode}.jpg`;
+                        } else {
+                            e.target.src = '/img/Catalog/placeholder.jpg'; // Fallback final
+                        }
+                    }}
+                    onLoad={() => {
+                        console.log(`Imagen cargada correctamente para: ${product.name}`);
+                    }}
+                />
+                <h3>{product.name}</h3>
+                <span>${product.price}</span>
+            </div>
+        );
+    });
 };
 
     const userLoged = userData && userData.token;
