@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import sargaLogo from 'public/img/sargaLogo.png';
-import userIcon from 'public/img/Home/user_icon.png';
+import sargaLogo from '/img/sargaLogo.png';
+import userIcon from '/img/Home/user_icon.png';
 import { onLogout } from '../../app/slices/userSlice';
 
-import imagenCatalogo from 'public/img/Home/MISTRAL_AGUS_2_12857.jpg';
-import imagenCatalogo1 from 'public/img/Home/mistral.jpg';
-import imagenCatalogo2 from 'public/img/Home/mistral2.jpg';
-import imagenCatalogo3 from 'public/img/Home/mistral3.jpg';
-import instagramIcon from 'public/img/Home/Instagram_icon.png';
+import imagenCatalogo from '/img/Home/MISTRAL_AGUS_2_12857.jpg';
+import imagenCatalogo1 from '/img/Home/mistral.jpg';
+import imagenCatalogo2 from '/img/Home/mistral2.jpg';
+import imagenCatalogo3 from '/img/Home/mistral3.jpg';
+import instagramIcon from '/img/Home/Instagram_icon.png';
 
 
 const HomePage = () => {
