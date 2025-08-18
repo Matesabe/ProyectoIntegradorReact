@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
-import "./AdministratorPage.css";
+import "./PromotionUpdate.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import sargaLogo from "/img/sargaLogo.png";
 import userIcon from "/img/Home/user_icon.png";
-import { onLogout } from "../../app/slices/userSlice";
-import { fetchPromotions, setPromotions } from "../../app/slices/promotionsSlice";
+import { onLogout } from "../../../../app/slices/userSlice";
+import { renderAmountForm, renderDateForm, renderProductsForm, renderRecurrenceForm } from "../PromotionRenders/PromotionRenders";
+import {
+  fetchPromotions,
+  setPromotions,
+} from "../../../../app/slices/promotionsSlice";
 
-const AdministratorPage = () => {
+const PromotionUpdatePage = () => {
+  const { id } = useParams(); // Obtener el ID de la promoción de la URL
+
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [promotion, setPromotion] = useState(null); // Estado para la promoción
+
   const userData = useSelector((state) => state.userSlice.userData);
-  const { promotions, loading, error } = useSelector((state) => state.promotionsSlice);
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,50 +26,29 @@ const AdministratorPage = () => {
   const userRol = userData ? userData.userData.rol : null;
   const userToken = userData ? userData.token : null;
 
+  const promotions = useSelector((state) => state.promotionsSlice.promotions);
+
+  const handleUpdatePromotion = (e, promotion) => {
+  e.preventDefault();
+  console.log("Actualizando promoción:", promotion);
+};
+
+  // Buscar la promoción cuando se carguen las promociones o cambie el ID
   useEffect(() => {
-    if (userToken) {
-      // Usar el thunk para cargar promociones
+    const foundPromotion = promotions.find(
+      (promo) => promo.id === parseInt(id)
+    );
+    if (foundPromotion) {
+      setPromotion(foundPromotion);
+    }
+  }, [promotions, id]);
+
+  // Cargar promociones si no están cargadas
+  useEffect(() => {
+    if (userToken && promotions.length === 0) {
       dispatch(fetchPromotions(userToken));
     }
-  }, [userToken, dispatch]);
-
-  const renderPromotions = () => {
-    if (loading) {
-      return <p>Cargando promociones...</p>;
-    }
-
-    if (error) {
-      return <p>Error al cargar promociones: {error}</p>;
-    }
-
-    if (promotions.length > 0) {
-      return (
-        <ul>
-          {promotions.map((promo) => (
-            <div className="promotion-item" 
-            key={promo.id}
-            onClick={() => goToUpdatePromoPage(promo.id)}>
-              <h4>{promo.description}</h4>
-              <p>{promo.type}</p>
-              <p>ID: {promo.id}</p>
-            </div>
-          ))}
-        </ul>
-      );
-    }
-    return <p>No hay promociones disponibles.</p>;
-  };
-
-  const goToUpdatePromoPage = (promoId) => {
-    navigateTo(`/admin/promotions/update/${promoId}`);
-  };
-
-  // Función para actualizar promociones manualmente (opcional)
-  const handleRefreshPromotions = () => {
-    if (userToken) {
-      dispatch(fetchPromotions(userToken));
-    }
-  };
+  }, [userToken, promotions.length, dispatch]);
 
   const renderNavLinks = () => {
     if (userLoged) {
@@ -130,6 +116,7 @@ const AdministratorPage = () => {
     navigateTo("/");
   };
 
+  // Cerrar dropdown cuando se haga click fuera de él
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isDropdownOpen && !event.target.closest(".user-icon")) {
@@ -143,8 +130,26 @@ const AdministratorPage = () => {
     };
   }, [isDropdownOpen]);
 
+  const loadPromotionForm = () => {
+    if (!promotion) return null;
+    switch (promotion.type) {
+      case "Amount":
+        return renderAmountForm(promotion, setPromotion, handleUpdatePromotion);
+      case "Date":
+        return renderDateForm(promotion, setPromotion, handleUpdatePromotion);
+        break;
+      case "Products":
+        return renderProductsForm(promotion, setPromotion, handleUpdatePromotion);
+      case "Recurrence":
+        return renderRecurrenceForm(promotion, setPromotion, handleUpdatePromotion);
+      default:
+        break;
+    }
+  };
+
+  
   return (
-    <div className="admin-container">
+    <div className="promo-container">
       <header className={`home-header ${isNavOpen ? "nav-open" : ""}`}>
         <figure>
           <a href="/">
@@ -174,43 +179,18 @@ const AdministratorPage = () => {
           </ul>
         </nav>
       </header>
-      <div className="acciones-admin">
-        <div className="promociones">
-          <h2>Promociones</h2>
-          <div className="crear-promociones">
-            <h3>Crear Nueva Promoción</h3>
-            <p>Acceder para crear una nueva promoción de puntos Sarga</p>
-            <button>
-              <a href="/admin/promotions/crear-promocion">Crear Promoción</a>
-            </button>
-          </div>
-          <div className="gestionar-promociones">
-            <h3>Gestionar Promociones</h3>
-            <p>Acceder para ver y gestionar las promociones existentes</p>
-            <button className="actualizar-promos-btn" onClick={handleRefreshPromotions} type="button">
-              Actualizar Lista
-            </button>
-            {renderPromotions()}
-          </div>
-        </div>
-        <div className="reportes">
-          <h2>Reportes</h2>
-          <div className="reportes-ventas">
-            <h3>Reportes Importación Compras</h3>
-            <button>Ver Reportes</button>
-          </div>
-          <div className="reportes-productos">
-            <h3>Reportes Importación Productos</h3>
-            <button>Ver Reportes</button>
-          </div>
-          <div className="reporte-canjes">
-            <h3>Reporte Canjes</h3>
-            <button>Ver Reporte</button>
-          </div>
-        </div>
+
+      <div className="promo-content">
+        <button onClick={() => navigateTo("/admin")} className="back-button">
+          ← Volver a Administración
+        </button>
+
+        <h2>Actualizar Promoción</h2>
+
+        {promotion ? loadPromotionForm() : <p>Cargando promoción...</p>}
       </div>
     </div>
   );
 };
 
-export default AdministratorPage;
+export default PromotionUpdatePage;

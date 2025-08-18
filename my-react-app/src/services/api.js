@@ -109,6 +109,52 @@ const getMistralProducts = async () => {
   }
 };
 
+const getProductById = async (productId) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/products/${productId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener el producto");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener el producto");
+  }
+};
+
+const getProductByCode = async (productCode) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/products/by-code/${productCode}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener el producto");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener el producto");
+  }
+};
+
 const getSubProducts = async (productCode) => {
   try {
     const response = await fetch(`${BASE_URL}/api/subproducts/by-productCode/${productCode}`, {
@@ -232,4 +278,4 @@ const getPromotions = async (userToken) => {
   }
 };
 
-export {login, registrarse, getComprasByUserId, getMistralProducts, getSubProducts, getWarehouses, getUserByCi, createRedemption, getPromotions};
+export {login, registrarse, getComprasByUserId, getMistralProducts, getProductById, getProductByCode, getSubProducts, getWarehouses, getUserByCi, createRedemption, getPromotions};

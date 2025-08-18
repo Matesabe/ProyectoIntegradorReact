@@ -1,0 +1,16 @@
+.tipo-promo{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.tipo-promo label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.tipo-promo select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

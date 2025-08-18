@@ -1,21 +1,43 @@
 import React, { useState, useEffect } from "react";
-import "./PromotionUpdate.css";
+import "./PromotionCreate.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import sargaLogo from "/img/sargaLogo.png";
 import userIcon from "/img/Home/user_icon.png";
-import { onLogout } from "../../../app/slices/userSlice";
+import { onLogout } from "../../../../app/slices/userSlice";
+import {
+  renderAmountForm,
+  renderDateForm,
+  renderProductsForm,
+  renderRecurrenceForm,
+} from "../PromotionRenders/PromotionRenders";
 import {
   fetchPromotions,
   setPromotions,
-} from "../../../app/slices/promotionsSlice";
+} from "../../../../app/slices/promotionsSlice";
 
-const PromotionUpdatePage = () => {
-  const { id } = useParams(); // Obtener el ID de la promoción de la URL
-
+const PromotionCreatePage = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [promotion, setPromotion] = useState(null); // Estado para la promoción
+
+  useEffect(() => {
+    setPromotion({
+      id: 0,
+      description: "",
+      type: "Amount",
+      isActive: false,
+      amountPerPoint: 0,
+      promotionProducts: [],
+      pointsPerProducts: 0,
+      promotionDateStart: "",
+      promotionDateEnd: "",
+      pointsPerDate: 0,
+      minimalAmount: 0,
+      recurrenceValue: 0,
+      pointsPerRecurrence: 0,
+    });
+  }, []);
 
   const userData = useSelector((state) => state.userSlice.userData);
   const navigateTo = useNavigate();
@@ -25,30 +47,9 @@ const PromotionUpdatePage = () => {
   const userRol = userData ? userData.userData.rol : null;
   const userToken = userData ? userData.token : null;
 
-  const promotions = useSelector((state) => state.promotionsSlice.promotions);
-
-  // Buscar la promoción cuando se carguen las promociones o cambie el ID
-  useEffect(() => {
-    const foundPromotion = promotions.find(
-      (promo) => promo.id === parseInt(id)
-    );
-    if (foundPromotion) {
-      setPromotion(foundPromotion);
-    }
-  }, [promotions, id]);
-
-  // Cargar promociones si no están cargadas
-  useEffect(() => {
-    if (userToken && promotions.length === 0) {
-      dispatch(fetchPromotions(userToken));
-    }
-  }, [userToken, promotions.length, dispatch]);
-
-  const handleUpdatePromotion = (e) => {
+  const handleCreatePromotion = (e, promotion) => {
     e.preventDefault();
-    // Aquí implementarías la lógica para actualizar la promoción
-    console.log("Actualizando promoción:", promotion);
-    // TODO: Implementar la actualización de la promoción
+    console.log("Creando nueva promoción:", promotion);
   };
 
   const renderNavLinks = () => {
@@ -135,104 +136,25 @@ const PromotionUpdatePage = () => {
     if (!promotion) return null;
     switch (promotion.type) {
       case "Amount":
-        return renderAmountForm();
+        return renderAmountForm(promotion, setPromotion, handleCreatePromotion);
       case "Date":
-        return renderDateForm();
+        return renderDateForm(promotion, setPromotion, handleCreatePromotion);
         break;
-
+      case "Products":
+        return renderProductsForm(
+          promotion,
+          setPromotion,
+          handleCreatePromotion
+        );
+      case "Recurrence":
+        return renderRecurrenceForm(
+          promotion,
+          setPromotion,
+          handleCreatePromotion
+        );
       default:
         break;
     }
-  };
-
-  const renderAmountForm = () => {
-    return (
-      <form onSubmit={handleUpdatePromotion}>
-        <div className="form-group">
-          <label htmlFor="description">Descripción:</label>
-          <input
-            type="text"
-            id="description"
-            value={promotion.description || ""}
-            onChange={(e) =>
-              setPromotion({ ...promotion, description: e.target.value })
-            }
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="amount">Monto por punto:</label>
-          <input
-            type="number"
-            id="amount"
-            value={promotion.amountPerPoint || ""}
-            onChange={(e) =>
-              setPromotion({ ...promotion, amountPerPoint: e.target.value })
-            }
-          />
-        </div>
-      </form>
-    );
-  };
-
-  const renderDateForm = () => {
-    return (
-      <form onSubmit={handleUpdatePromotion}>
-        <div className="form-group">
-          <label htmlFor="description">Descripción:</label>
-          <input
-            type="text"
-            id="description"
-            value={promotion.description || ""}
-            onChange={(e) =>
-              setPromotion({ ...promotion, description: e.target.value })
-            }
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="startDate">Fecha de Inicio:</label>
-          <input
-            type="date"
-            id="startDate"
-            value={promotion.promotionDateStart || ""}
-            onChange={(e) =>
-              setPromotion({ ...promotion, promotionDateStart: e.target.value })
-            }
-          />
-          <label htmlFor="endDate">Fecha de Fin:</label>
-          <input
-            type="date"
-            id="endDate"
-            value={promotion.promotionDateEnd || ""}
-            onChange={(e) =>
-              setPromotion({ ...promotion, promotionDateEnd: e.target.value })
-            }
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="points">Puntos:</label>
-          <input
-            type="number"
-            id="points"
-            value={promotion.pointsPerDate || ""}
-            onChange={(e) =>
-              setPromotion({ ...promotion, pointsPerDate: e.target.value })
-            }
-          />
-        </div>
-        <div>
-          <label htmlFor="isActive">Habilitada:</label>
-          <input
-            type="checkbox"
-            id="isActive"
-            checked={promotion.isActive || false}
-            onChange={(e) =>
-              setPromotion({ ...promotion, isActive: e.target.checked })
-            }
-          />
-        </div>
-        <button type="submit">Actualizar Promoción</button>
-      </form>
-    );
   };
 
   return (
@@ -272,12 +194,70 @@ const PromotionUpdatePage = () => {
           ← Volver a Administración
         </button>
 
-        <h2>Actualizar Promoción</h2>
+        <h2>Crear Nueva Promoción</h2>
+        <div className="tipo-promo">
+          <label htmlFor="tipo">Tipo de Promoción:</label>
+          <select
+            id="tipo"
+            value={promotion ? promotion.type : ""}
+            onChange={(e) => {
+              const newType = e.target.value;
+              // Actualizar el estado con valores por defecto para cada tipo
+              let updatedPromotion = promotion
+                ? { ...promotion, type: newType }
+                : { type: newType };
+              switch (newType) {
+                case "Amount":
+                  updatedPromotion = {
+                    ...updatedPromotion,
+                    amountPerPoint: 0,
+                    minimalAmount: 0,
+                  };
+                  break;
+                case "Date":
+                  updatedPromotion = {
+                    ...updatedPromotion,
+                    promotionDateStart: "",
+                    promotionDateEnd: "",
+                    pointsPerDate: 0,
+                  };
+                  break;
+                case "Products":
+                  updatedPromotion = {
+                    ...updatedPromotion,
+                    promotionProducts: [],
+                    pointsPerProducts: 0,
+                  };
+                  break;
+                case "Recurrence":
+                  updatedPromotion = {
+                    ...updatedPromotion,
+                    recurrenceValue: 0,
+                    pointsPerRecurrence: 0,
+                  };
+                  break;
+                default:
+                  break;
+              }
+              setPromotion(updatedPromotion);
+            }}
+          >
+            <option value="">Seleccionar tipo</option>
+            <option value="Amount">Monto por punto</option>
+            <option value="Date">Fecha de promoción</option>
+            <option value="Products">Productos</option>
+            <option value="Recurrence">Recurrencia</option>
+          </select>
+        </div>
 
-        {promotion ? loadPromotionForm() : <p>Cargando promoción...</p>}
+        {promotion && promotion.type ? (
+          loadPromotionForm()
+        ) : (
+          <p>Cargando promoción...</p>
+        )}
       </div>
     </div>
   );
 };
 
-export default PromotionUpdatePage;
+export default PromotionCreatePage;

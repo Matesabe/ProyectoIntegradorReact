@@ -212,7 +212,6 @@ form:hover {
     background: rgba(79, 140, 255, 0.05);
     padding: 15px 20px;
     border-radius: 8px;
-    border-left: 4px solid var(--primary-blue);
     transition: var(--transition);
 }
 
