@@ -15,6 +15,7 @@ import {
   fetchPromotions,
   setPromotions,
 } from "../../../../app/slices/promotionsSlice";
+import { postPromotion } from "../../../../services/api";
 
 const PromotionCreatePage = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -30,8 +31,8 @@ const PromotionCreatePage = () => {
       amountPerPoint: 0,
       promotionProducts: [],
       pointsPerProducts: 0,
-      promotionDateStart: "",
-      promotionDateEnd: "",
+      promotionDateStart: "0001-01-01T00:00:00",
+      promotionDateEnd: "0001-01-01T00:00:00",
       pointsPerDate: 0,
       minimalAmount: 0,
       recurrenceValue: 0,
@@ -50,7 +51,18 @@ const PromotionCreatePage = () => {
   const handleCreatePromotion = (e, promotion) => {
     e.preventDefault();
     console.log("Creando nueva promoción:", promotion);
+    postPromotion(promotion, userToken)
+      .then((response) => {
+        console.log("Promoción creada:", response);
+        setPromotion(response);
+        setMensaje("Promoción creada exitosamente");
+      })
+      .catch((error) => {
+        setMensaje("Error al crear la promoción: " + error);
+      });
   };
+
+  const [mensaje, setMensaje] = useState("");
 
   const renderNavLinks = () => {
     if (userLoged) {
@@ -217,8 +229,8 @@ const PromotionCreatePage = () => {
                 case "Date":
                   updatedPromotion = {
                     ...updatedPromotion,
-                    promotionDateStart: "",
-                    promotionDateEnd: "",
+                    promotionDateStart: "0001-01-01T00:00:00",
+                    promotionDateEnd: "0001-01-01T00:00:00",
                     pointsPerDate: 0,
                   };
                   break;
@@ -256,6 +268,7 @@ const PromotionCreatePage = () => {
           <p>Cargando promoción...</p>
         )}
       </div>
+      {mensaje && <p className="mensaje">{mensaje}</p>}
     </div>
   );
 };

@@ -6,6 +6,7 @@ import sargaLogo from "/img/sargaLogo.png";
 import userIcon from "/img/Home/user_icon.png";
 import { onLogout } from "../../app/slices/userSlice";
 import { fetchPromotions, setPromotions } from "../../app/slices/promotionsSlice";
+import { deletePromotion } from "../../services/api";
 
 const AdministratorPage = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -40,11 +41,12 @@ const AdministratorPage = () => {
         <ul>
           {promotions.map((promo) => (
             <div className="promotion-item" 
-            key={promo.id}
-            onClick={() => goToUpdatePromoPage(promo.id)}>
+            key={promo.id}>
               <h4>{promo.description}</h4>
               <p>{promo.type}</p>
               <p>ID: {promo.id}</p>
+              <button onClick={() => goToUpdatePromoPage(promo.id)}>Actualizar</button>
+              <button onClick={() => handleDeletePromotion(promo.id)}>Eliminar</button>
             </div>
           ))}
         </ul>
@@ -55,6 +57,20 @@ const AdministratorPage = () => {
 
   const goToUpdatePromoPage = (promoId) => {
     navigateTo(`/admin/promotions/update/${promoId}`);
+  };
+
+  const handleDeletePromotion = async (promoId) => {
+    if (!window.confirm("¿Está seguro que desea eliminar esta promoción? Esta acción no se puede deshacer.")) {
+      return;
+    }
+    if (userToken) {
+      try {
+        await deletePromotion(promoId, userToken);
+        dispatch(fetchPromotions(userToken));
+      } catch (error) {
+        console.error("Error al eliminar la promoción:", error);
+      }
+    }
   };
 
   // Función para actualizar promociones manualmente (opcional)

@@ -146,7 +146,8 @@ const getProductByCode = async (productCode) => {
       },
     });
     if (response.ok) {
-      return await response.json();
+      const body = await response.json();
+      return body;
     } else {
       return Promise.reject("Error al obtener el producto");
     }
@@ -278,4 +279,109 @@ const getPromotions = async (userToken) => {
   }
 };
 
-export {login, registrarse, getComprasByUserId, getMistralProducts, getProductById, getProductByCode, getSubProducts, getWarehouses, getUserByCi, createRedemption, getPromotions};
+const postPromotion = async (promotionData, userToken) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/promotions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+        "Authorization": `Bearer ${userToken}`
+      },
+      body: JSON.stringify(promotionData)
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al crear la promoción");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al crear la promoción");
+  }
+};
+
+const updatePromotion = async ( promotionData, userToken) => {
+  if (promotionData.type !== "Products") {
+      promotionData.promotionProducts = promotionData.promotionProducts || [];
+  }
+  
+  try {
+    const response = await fetch(`${BASE_URL}/api/promotions/${promotionData.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "PUT, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+        "Authorization": `Bearer ${userToken}`
+      },
+      body: JSON.stringify(promotionData)
+    });
+    if (response.ok) {
+      return response;
+    } else {
+      console.error("Error al actualizar la promoción:", response.statusText);
+      return Promise.reject("Error al actualizar la promoción");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al actualizar la promoción");
+  }
+};
+
+const getPromotionById = async (promotionId, userToken) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/promotions/${promotionId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+        "Authorization": `Bearer ${userToken}`
+      }
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener la promoción");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener la promoción");
+  }
+};
+
+const deletePromotion = async (promotionId, userToken) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/promotions/${promotionId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+        "Authorization": `Bearer ${userToken}`
+      }
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al eliminar la promoción");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al eliminar la promoción");
+  }
+};
+
+export {login, registrarse,
+   getComprasByUserId, getMistralProducts, getProductById, getProductByCode, getSubProducts, getWarehouses,
+   getUserByCi, createRedemption, getPromotions, postPromotion, updatePromotion, getPromotionById, deletePromotion};

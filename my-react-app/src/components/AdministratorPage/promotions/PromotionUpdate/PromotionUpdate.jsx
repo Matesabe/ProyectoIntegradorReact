@@ -5,11 +5,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import sargaLogo from "/img/sargaLogo.png";
 import userIcon from "/img/Home/user_icon.png";
 import { onLogout } from "../../../../app/slices/userSlice";
-import { renderAmountForm, renderDateForm, renderProductsForm, renderRecurrenceForm } from "../PromotionRenders/PromotionRenders";
+import {
+  renderAmountForm,
+  renderDateForm,
+  renderProductsForm,
+  renderRecurrenceForm,
+} from "../PromotionRenders/PromotionRenders";
 import {
   fetchPromotions,
   setPromotions,
 } from "../../../../app/slices/promotionsSlice";
+
+import {updatePromotion, getPromotionById} from "../../../../services/api"
 
 const PromotionUpdatePage = () => {
   const { id } = useParams(); // Obtener el ID de la promoción de la URL
@@ -28,10 +35,20 @@ const PromotionUpdatePage = () => {
 
   const promotions = useSelector((state) => state.promotionsSlice.promotions);
 
-  const handleUpdatePromotion = (e, promotion) => {
-  e.preventDefault();
-  console.log("Actualizando promoción:", promotion);
-};
+  const handleUpdatePromotion = async (e, promotion) => {
+    e.preventDefault();
+    console.log("Actualizando promoción:", promotion);
+    try {
+      const updatedPromotion = await updatePromotion(promotion, userToken);
+      const foundPromotion = await getPromotionById(updatedPromotion.id, userToken);
+      setPromotion(foundPromotion);
+      setMensaje("Promoción actualizada exitosamente");
+    } catch (error) {
+      setMensaje("Error al actualizar la promoción: " + error);
+    }
+  };
+
+  const [mensaje, setMensaje] = useState("");
 
   // Buscar la promoción cuando se carguen las promociones o cambie el ID
   useEffect(() => {
@@ -139,15 +156,22 @@ const PromotionUpdatePage = () => {
         return renderDateForm(promotion, setPromotion, handleUpdatePromotion);
         break;
       case "Products":
-        return renderProductsForm(promotion, setPromotion, handleUpdatePromotion);
+        return renderProductsForm(
+          promotion,
+          setPromotion,
+          handleUpdatePromotion
+        );
       case "Recurrence":
-        return renderRecurrenceForm(promotion, setPromotion, handleUpdatePromotion);
+        return renderRecurrenceForm(
+          promotion,
+          setPromotion,
+          handleUpdatePromotion
+        );
       default:
         break;
     }
   };
 
-  
   return (
     <div className="promo-container">
       <header className={`home-header ${isNavOpen ? "nav-open" : ""}`}>
@@ -189,6 +213,7 @@ const PromotionUpdatePage = () => {
 
         {promotion ? loadPromotionForm() : <p>Cargando promoción...</p>}
       </div>
+      {mensaje && <p className="mensaje">{mensaje}</p>}
     </div>
   );
 };
