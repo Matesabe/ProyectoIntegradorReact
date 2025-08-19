@@ -46,7 +46,6 @@ const AdministratorPage = () => {
               <p>{promo.type}</p>
               <p>ID: {promo.id}</p>
               <button onClick={() => goToUpdatePromoPage(promo.id)}>Actualizar</button>
-              <button onClick={() => handleDeletePromotion(promo.id)}>Eliminar</button>
             </div>
           ))}
         </ul>
