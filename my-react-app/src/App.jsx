@@ -17,6 +17,7 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import RedemptionsReports from './components/AdministratorPage/reports/RedemptionsReports/RedemptionsReports';
 
 function App() {
     const userData = useSelector((state) => state.userSlice.userData);
@@ -89,7 +90,16 @@ function App() {
                         </AdminRoute>
                     }
                 />
-                
+
+                <Route
+                    path="/admin/reportes/canjes"
+                    element={
+                        <AdminRoute>
+                            <RedemptionsReports />
+                        </AdminRoute>
+                    }
+                />
+
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </div>

@@ -210,17 +210,17 @@ const AdministratorPage = () => {
         </div>
         <div className="reportes">
           <h2>Reportes</h2>
-          <div className="reportes-ventas">
+          <div className="div-reportes">
             <h3>Reportes Importación Compras</h3>
-            <button>Ver Reportes</button>
+            <button as="a" href="/admin/reportes/compras">Ver Reportes</button>
           </div>
-          <div className="reportes-productos">
+          <div className="div-reportes">
             <h3>Reportes Importación Productos</h3>
-            <button>Ver Reportes</button>
+            <button as="a" href="/admin/reportes/productos">Ver Reportes</button>
           </div>
-          <div className="reporte-canjes">
+          <div className="div-reportes">
             <h3>Reporte Canjes</h3>
-            <button>Ver Reporte</button>
+            <button><a href="/admin/reportes/canjes">Ver Reporte</a></button>
           </div>
         </div>
       </div>
