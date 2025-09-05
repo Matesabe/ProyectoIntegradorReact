@@ -133,7 +133,6 @@ const AdministratorPage = () => {
   };
 
   const toggleUserDropdown = (e) => {
-    console.log("Toggle user dropdown");
     e.preventDefault();
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -210,14 +209,14 @@ const AdministratorPage = () => {
         </div>
         <div className="reportes">
           <h2>Reportes</h2>
-          <div className="div-reportes">
+          {/* <div className="div-reportes">
             <h3>Reportes Importación Compras</h3>
             <button as="a" href="/admin/reportes/compras">Ver Reportes</button>
           </div>
           <div className="div-reportes">
             <h3>Reportes Importación Productos</h3>
             <button as="a" href="/admin/reportes/productos">Ver Reportes</button>
-          </div>
+          </div> */}
           <div className="div-reportes">
             <h3>Reporte Canjes</h3>
             <button><a href="/admin/reportes/canjes">Ver Reporte</a></button>

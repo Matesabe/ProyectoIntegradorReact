@@ -50,10 +50,8 @@ const PromotionCreatePage = () => {
 
   const handleCreatePromotion = (e, promotion) => {
     e.preventDefault();
-    console.log("Creando nueva promoción:", promotion);
     postPromotion(promotion, userToken)
       .then((response) => {
-        console.log("Promoción creada:", response);
         setPromotion(response);
         setMensaje("Promoción creada exitosamente");
       })
@@ -118,7 +116,6 @@ const PromotionCreatePage = () => {
   };
 
   const toggleUserDropdown = (e) => {
-    console.log("Toggle user dropdown");
     e.preventDefault();
     setIsDropdownOpen(!isDropdownOpen);
   };

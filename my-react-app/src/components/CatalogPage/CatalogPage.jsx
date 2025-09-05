@@ -102,9 +102,7 @@ const CatalogPage = () => {
                             e.target.src = '/img/Catalog/placeholder.jpg'; // Fallback final
                         }
                     }}
-                    onLoad={() => {
-                        console.log(`Imagen cargada correctamente para: ${product.name}`);
-                    }}
+                    
                 />
                 <h3>{product.name}</h3>
                 <span>${product.price}</span>
@@ -156,7 +154,6 @@ const CatalogPage = () => {
     };
 
     const toggleUserDropdown = (e) => {
-        console.log("Toggle user dropdown");
         e.preventDefault();
         setIsDropdownOpen(!isDropdownOpen);
     };

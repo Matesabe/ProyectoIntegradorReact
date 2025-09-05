@@ -38,7 +38,6 @@ const [loading, setLoading] = useState(false);
         }
     }, [checkUser])//autologin -> lleva al dashboard
 
-
     const _onHandleClick = async (event) => {
         event.preventDefault();//evitar envío formulario
         try {
@@ -66,7 +65,6 @@ const [loading, setLoading] = useState(false);
             setLoading(false);
             setBtnDisabled(false);
         }
-        
     };
 
     const _onHandleChange = () => {

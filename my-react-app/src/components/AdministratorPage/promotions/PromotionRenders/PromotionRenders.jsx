@@ -8,7 +8,6 @@ const getProducts = async (promotionProducts) => {
     );
     return products;
   } catch (error) {
-    console.error("Error fetching products:", error);
     return [];
   }
 };
@@ -122,7 +121,6 @@ const ProductsForm = ({ promotion, setPromotion, action }) => {
 
   //  Función asíncrona para generar productos de promoción
   const generatePromotionProducts = async () => {
-    console.log("Generating promotion products for codes:", productsCode);
 
     try {
       const promotionProducts = await Promise.all(
@@ -138,7 +136,6 @@ const ProductsForm = ({ promotion, setPromotion, action }) => {
 
       return promotionProducts;
     } catch (error) {
-      console.error("Error generando productos de promoción:", error);
       return [];
     }
   };

@@ -277,9 +277,7 @@ const ProductPage = () => {
                 e.target.src = '/img/Catalog/placeholder.jpg'; // Fallback final
               }
             }}
-            onLoad={() => {
-              console.log(`Imagen cargada correctamente para: ${product.name}`);
-            }}
+            
           />
         </div>
 

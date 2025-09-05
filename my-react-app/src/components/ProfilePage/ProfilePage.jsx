@@ -109,7 +109,6 @@ const ProfilePage = () => {
   };
 
   const toggleUserDropdown = (e) => {
-    console.log("Toggle user dropdown");
     e.preventDefault();
     setIsDropdownOpen(!isDropdownOpen);
   };

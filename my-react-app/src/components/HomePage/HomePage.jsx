@@ -63,7 +63,6 @@ const HomePage = () => {
     };
 
     const toggleUserDropdown = (e) => {
-        console.log("Toggle user dropdown");
         e.preventDefault();
         setIsDropdownOpen(!isDropdownOpen);
     };
@@ -169,7 +168,7 @@ const HomePage = () => {
                 </div>
             </div>
             <div className='footer-copyright'>
-                <p>© 2024 Sarga. Todos los derechos reservados.</p>
+                <p>© 2025 Sarga. Todos los derechos reservados.</p>
             </div>
         </div>
     );

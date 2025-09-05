@@ -77,7 +77,6 @@ const RedemptionsReports = () => {
   };
 
   const toggleUserDropdown = (e) => {
-    console.log("Toggle user dropdown");
     e.preventDefault();
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -130,7 +129,6 @@ const RedemptionsReports = () => {
         // Obtener redemptions
         const redemptionsData = await getRedemptions(userToken);
         setRedemptions(redemptionsData);
-        console.log("Redenciones obtenidas:", redemptionsData);
 
         // Obtener usuarios únicos
         const uniqueUserIds = [...new Set(redemptionsData.map((r) => r.clientId))];
