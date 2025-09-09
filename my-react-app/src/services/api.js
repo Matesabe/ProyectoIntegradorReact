@@ -62,6 +62,27 @@ const registrarse = async (username, password, email, ci, phone) => {
   }
 };
 
+const getAllCompras = async (userToken) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/purchases`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${userToken}`
+      }
+    });
+
+    if (response.ok) {
+      console.log("Todas las compras obtenidas exitosamente");
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener las compras");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener las compras");
+  }
+};
+
 const getComprasByUserId = async (userId, userToken) => {
   try {
     const response = await fetch(`${BASE_URL}/api/purchases/client/${userId}`, {
@@ -430,6 +451,30 @@ const getRedemptions = async (userToken) => {
   }
 };
 
-export {login, registrarse,
+const getRedemptionsByUserId = async (userId, userToken) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/redemptions/byUserId/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+        "Authorization": `Bearer ${userToken}`
+      }
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener los canjes");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener los canjes del cliente");
+  }
+};
+
+export {login, registrarse, getAllCompras,
    getComprasByUserId, getMistralProducts, getProductById, getProductByCode, getSubProducts, getWarehouses,
-   getUserByCi, getUserById, createRedemption, getRedemptions, getPromotions, postPromotion, updatePromotion, getPromotionById, deletePromotion};
+   getUserByCi, getUserById, createRedemption, getRedemptions, getPromotions, getRedemptionsByUserId, postPromotion, updatePromotion, getPromotionById, deletePromotion};

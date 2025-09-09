@@ -1,0 +1,420 @@
+/* Variables CSS para consistencia */
+:root {
+    --field-drab: #73683bff;
+    --field-drab-2: #675d35;
+    --caf-noir: #583e23ff;
+    --gunmetal: #13262fff;
+    --khaki: #b0a084ff;
+    --lavender-web: #e9e6ffff;
+    --gradient-main: linear-gradient(135deg, var(--field-drab) 0%, var(--caf-noir) 25%, var(--gunmetal) 50%, var(--khaki) 75%, var(--lavender-web) 100%);
+    --primary-blue: #4f8cff;
+    --success-green: #28a745;
+    --error-red: #dc3545;
+    --warning-orange: #fd7e14;
+    --light-gray: #f8f9fa;
+    --dark-text: #2d3a4b;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --box-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s ease;
+    --card-bg: #ffffff;
+    --border-color: #e0e4e7;
+}
+
+/* Global styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Container principal */
+.purchases-reports-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--dark-text);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--gradient-main);
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.purchases-reports-container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Contenido principal */
+.reports-content {
+    flex: 1;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+/* Título del reporte */
+.reports-title {
+    text-align: center;
+    margin-bottom: 40px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+}
+
+.reports-title h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-text);
+    position: relative;
+}
+
+.reports-title h1::after {
+    content: '📊';
+    margin-left: 15px;
+    font-size: 2rem;
+}
+
+.reports-title p {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Container de reportes */
+.purchases-reports {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+}
+
+/* Loading state */
+.loading {
+    text-align: center;
+    font-size: 1.3rem;
+    color: var(--primary-blue);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 50px 30px;
+    box-shadow: var(--box-shadow);
+    border-left: 4px solid var(--primary-blue);
+}
+
+.loading::before {
+    content: '⏳';
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    animation: spin 2s linear infinite;
+}
+
+/* No data state */
+.no-data {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #999;
+    background: var(--card-bg);
+    border: 2px dashed #ddd;
+    border-radius: var(--border-radius);
+    padding: 50px 30px;
+    margin: 20px 0;
+}
+
+.no-data::before {
+    content: '📭';
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.7;
+}
+
+/* Cards de compras */
+.purchase-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    border-left: 4px solid var(--primary-blue);
+}
+
+.purchase-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow-hover);
+    border-left-width: 6px;
+}
+
+/* Header de la card */
+.purchase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.purchase-header h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--dark-text);
+    margin: 0;
+}
+
+.purchase-header h3::before {
+    content: '🛒';
+    margin-right: 10px;
+}
+
+.amount-badge {
+    background: linear-gradient(135deg, var(--success-green), #20a045);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+/* Secciones de información */
+.client-info,
+.purchase-details,
+.products-info {
+    margin-bottom: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    border-left: 3px solid transparent;
+    transition: var(--transition);
+}
+
+.client-info {
+    border-left-color: var(--primary-blue);
+}
+
+.purchase-details {
+    border-left-color: var(--warning-orange);
+}
+
+.products-info {
+    border-left-color: var(--success-green);
+}
+
+.client-info:hover,
+.purchase-details:hover,
+.products-info:hover {
+    background: #f0f2f5;
+    transform: translateX(5px);
+}
+
+/* Títulos de secciones */
+.client-info h4,
+.purchase-details h4,
+.products-info h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--dark-text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.client-info h4::before {
+    content: '👤';
+    margin-right: 8px;
+}
+
+.purchase-details h4::before {
+    content: '📋';
+    margin-right: 8px;
+}
+
+.products-info h4::before {
+    content: '📦';
+    margin-right: 8px;
+}
+
+/* Párrafos de información */
+.client-info p,
+.purchase-details p {
+    margin: 10px 0;
+    font-size: 0.95rem;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+.client-info strong,
+.purchase-details strong {
+    color: var(--dark-text);
+    min-width: 120px;
+    font-weight: 600;
+}
+
+/* Lista de productos */
+.products-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.product-item {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    transition: var(--transition);
+}
+
+.product-item:hover {
+    background: #f8f9fa;
+    border-color: var(--success-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.1);
+}
+
+.product-item p {
+    margin: 8px 0;
+    font-size: 0.9rem;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-item strong {
+    color: var(--dark-text);
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .reports-content {
+        padding: 30px 15px;
+    }
+
+    .reports-title {
+        padding: 25px 20px;
+        margin-bottom: 30px;
+    }
+
+    .reports-title h1 {
+        font-size: 2rem;
+    }
+
+    .purchases-reports {
+        gap: 20px;
+    }
+
+    .purchase-card {
+        padding: 20px;
+    }
+
+    .purchase-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .client-info,
+    .purchase-details,
+    .products-info {
+        padding: 15px;
+    }
+
+    .client-info p,
+    .purchase-details p {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .products-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .product-item {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .reports-content {
+        padding: 20px 10px;
+    }
+
+    .reports-title {
+        padding: 20px 15px;
+    }
+
+    .reports-title h1 {
+        font-size: 1.8rem;
+    }
+
+    .purchase-card {
+        padding: 15px;
+    }
+
+    .client-info,
+    .purchase-details,
+    .products-info {
+        padding: 12px;
+    }
+
+    .amount-badge {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Animaciones */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Scrollbar personalizada */
+.purchases-reports::-webkit-scrollbar {
+    width: 6px;
+}
+
+.purchases-reports::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.purchases-reports::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: 3px;
+}
+
+.purchases-reports::-webkit-scrollbar-thumb:hover {
+    background: #3a7bd5;
+}

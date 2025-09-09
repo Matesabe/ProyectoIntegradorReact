@@ -109,7 +109,7 @@ const HomePage = () => {
                     <nav>
                         <ul>
                             <li><a href="/catalog">Catálogo</a></li>
-                            <li><a href="/">Puntos Sarga</a></li>
+                            <li><a href="/stores">Nuestras Tiendas</a></li>
                             {renderNavLinks()}
                         </ul>
                     </nav>

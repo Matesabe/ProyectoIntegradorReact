@@ -6,6 +6,7 @@ import RegistrarsePage from './components/RegistrarsePage/RegistrarsePage';
 import { ProfilePage } from './components/ProfilePage/ProfilePage';
 import {CatalogPage} from './components/CatalogPage/CatalogPage';
 import {ProductPage} from './components/ProductPage/ProductPage';
+import {StoresPage} from './components/StoresPage/StoresPage';
 import {CanjePage} from './components/CanjePage/CanjePage';
 import AdministratorPage from './components/AdministratorPage/AdministratorPage';
 import PromotionCreatePage from './components/AdministratorPage/promotions/PromotionCreate/PromotionCreate';
@@ -18,6 +19,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import RedemptionsReports from './components/AdministratorPage/reports/RedemptionsReports/RedemptionsReports';
+import PurchasesReports from './components/AdministratorPage/reports/PurchasesReports/PurchasesReports';
 
 function App() {
     const userData = useSelector((state) => state.userSlice.userData);
@@ -42,6 +44,7 @@ function App() {
                 <Route path="/register" element={<RegistrarsePage />} />
                 <Route path="/catalog" element={<CatalogPage />} />
                 <Route path="/product/:id" element={<ProductPage />} />
+                <Route path="/stores" element={<StoresPage />} />
                 
                 {/* Rutas protegidas para usuarios logueados */}
                 <Route
@@ -96,6 +99,15 @@ function App() {
                     element={
                         <AdminRoute>
                             <RedemptionsReports />
+                        </AdminRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/reportes/compras"
+                    element={
+                        <AdminRoute>
+                            <PurchasesReports />
                         </AdminRoute>
                     }
                 />

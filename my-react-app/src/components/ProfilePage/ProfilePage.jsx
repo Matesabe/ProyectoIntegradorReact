@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getComprasByUserId } from "../../services/api";
+import { getComprasByUserId, getRedemptionsByUserId } from "../../services/api";
 import "./ProfilePage.css";
 import sargaLogo from "/img/sargaLogo.png";
 import userIcon from "/img/Home/user_icon.png";
@@ -20,6 +20,7 @@ const ProfilePage = () => {
   const isAdmin =
     userData && userData.userData && userData.userData.Role === "Administrator";
   const [comprasCliente, setComprasCliente] = useState([]);
+  const [redemptionsCliente, setRedemptionsCliente] = useState([]);
 
   useEffect(() => {
     if (userLoged) {
@@ -52,6 +53,39 @@ const ProfilePage = () => {
       comprasList.appendChild(compraItem);
     });
   };
+
+  useEffect(() => {
+    if (userLoged) {
+      getRedemptionsByUserId(userData.userData.id, userToken)
+        .then((redemptions) => {
+          setRedemptionsCliente(redemptions);
+          displayRedemptions(redemptions);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los canjes:", error);
+        });
+    }
+  }, [userLoged, userData.userData.id]);
+
+  const displayRedemptions = (redemptions) => {
+    const redemptionsList = document.querySelector(".redemption-history-list");
+    if (!redemptions || redemptions.length === 0) {
+      redemptionsList.innerHTML = "<p>No tienes canjes registrados.</p>";
+      return;
+    }
+    redemptionsList.innerHTML = ""; // Limpiar la lista antes de mostrar los nuevos canjes
+    redemptions.forEach((redemption) => {
+      const redemptionItem = document.createElement("div");
+      redemptionItem.className = "redemption-item";
+      redemptionItem.innerHTML = `
+        <p>ID: ${redemption.id}</p>
+        <p>Puntos Usados: ${redemption.pointsUsed}</p>
+        <p>Fecha: ${new Date(redemption.date).toLocaleDateString()}</p>
+      `;
+      redemptionsList.appendChild(redemptionItem);
+    });
+  };
+
 
   const userRol = userData ? userData.userData.rol : null;
 
@@ -179,6 +213,13 @@ const ProfilePage = () => {
           <p>Aquí puedes ver tus compras recientes.</p>
         </div>
         <div className="purchase-history-list"></div>
+      </div>
+      <div className="redemption-history">
+        <div className="redemption-history-content">
+          <h2>Mis Canjes</h2>
+          <p>Aquí puedes ver tus canjes recientes.</p>
+        </div>
+        <div className="redemption-history-list"></div>
       </div>
     </div>
   );

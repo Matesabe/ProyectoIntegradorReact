@@ -326,6 +326,142 @@
     font-style: italic;
 }
 
+/* Historial de canjes */
+.redemption-history {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 16px;
+    padding: 40px;
+    margin: 20px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.redemption-history:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.redemption-history-content h2 {
+    font-size: 2rem;
+    color: #2d3a4b;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+    position: relative;
+}
+
+.redemption-history-content h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #28a745, #20c997);
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
+.redemption-history-content p {
+    font-size: 1.1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.redemption-history-list {
+    min-height: 200px;
+    background-color: rgba(245, 247, 250, 0.5);
+    border-radius: 12px;
+    padding: 30px;
+    border: 2px dashed #ddd;
+    position: relative;
+}
+
+/* Cuando no hay canjes */
+.redemption-history-list:empty::before {
+    content: '🎁';
+    font-size: 3rem;
+    opacity: 0.3;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.redemption-history-list:empty::after {
+    content: 'No tienes canjes registrados';
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #999;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Estilos para los items de canjes */
+.redemption-item {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(32, 201, 151, 0.05) 100%);
+    border: 1px solid rgba(40, 167, 69, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+    border-left: 4px solid #28a745;
+}
+
+.redemption-item:hover {
+    transform: translateX(8px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.15);
+    border-left-width: 6px;
+}
+
+.redemption-item::before {
+    content: '✨';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+.redemption-item p {
+    margin: 8px 0;
+    font-size: 1rem;
+    color: #555;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 6px;
+    border: none;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.redemption-item p:first-child {
+    background-color: rgba(40, 167, 69, 0.1);
+    font-weight: 600;
+    color: #2d3a4b;
+}
+
+.redemption-item p:last-child {
+    background-color: rgba(32, 201, 151, 0.1);
+    font-weight: 600;
+    color: #2d3a4b;
+}
+
+.redemption-item p:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: none;
+    border-left: none;
+}
+
 /* Media Queries - Móvil */
 @media (max-width: 768px) {
     /* Header móvil */
@@ -449,6 +585,43 @@
         bottom: 10px;
         font-size: 0.8rem;
     }
+
+    .redemption-history {
+        margin: 20px 16px;
+        padding: 30px 20px;
+        width: calc(100% - 32px);
+    }
+
+    .redemption-history-content h2 {
+        font-size: 1.8rem;
+    }
+
+    .redemption-history-list {
+        padding: 20px;
+        min-height: 150px;
+    }
+
+    .redemption-history-list:empty::before {
+        font-size: 2rem;
+    }
+
+    .redemption-history-list:empty::after {
+        bottom: 10px;
+        font-size: 0.8rem;
+    }
+
+    .redemption-item {
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    .redemption-item p {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
 }
 
 /* Media Queries - Tablet */
@@ -462,14 +635,19 @@
         margin: 20px;
         padding: 35px 30px;
     }
+
+    .redemption-history {
+        margin: 20px;
+        padding: 35px 30px;
+    }
 }
 
 /* Efectos adicionales */
-.profile-info, .purchase-history {
+.profile-info, .purchase-history, .redemption-history {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.profile-info:hover, .purchase-history:hover {
+.profile-info:hover, .purchase-history:hover, .redemption-history:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
