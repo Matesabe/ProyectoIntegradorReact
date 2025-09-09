@@ -462,6 +462,236 @@
     border-left: none;
 }
 
+/* Estados de carga y mensajes */
+.loading-message,
+.no-data-message {
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 1.1rem;
+    color: #666;
+    background: rgba(245, 247, 250, 0.8);
+    border-radius: 8px;
+    border: 1px solid #e0e4e7;
+}
+
+.loading-message {
+    color: #4f8cff;
+    border-left: 4px solid #4f8cff;
+}
+
+.loading-message::before {
+    content: '⏳';
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.no-data-message {
+    color: #999;
+    border: 2px dashed #ddd;
+    font-style: italic;
+}
+
+.no-data-message::before {
+    content: '📭';
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    opacity: 0.6;
+}
+
+/* Estilos para items de compras */
+.compra-item {
+    background: #ffffff;
+    border: 1px solid #e0e4e7;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-left: 4px solid #4f8cff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.compra-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Header del item de compra */
+.compra-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.compra-header h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3a4b;
+    margin: 0;
+}
+
+.compra-header h4::before {
+    content: '🛒';
+    margin-right: 8px;
+}
+
+.amount-badge {
+    background: linear-gradient(135deg, #4f8cff, #3a7bd5);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 6px rgba(79, 140, 255, 0.3);
+}
+
+/* Detalles de la compra */
+.compra-details {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 3px solid #4f8cff;
+}
+
+.compra-details p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+.compra-details strong {
+    color: #2d3a4b;
+    font-weight: 600;
+    min-width: 120px;
+}
+
+/* Información de productos */
+.productos-info {
+    background: #f0f8ff;
+    border-radius: 6px;
+    padding: 15px;
+    border-left: 3px solid #28a745;
+}
+
+.productos-info > strong {
+    display: block;
+    color: #2d3a4b;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.productos-info > strong::before {
+    content: '📦';
+    margin-right: 8px;
+}
+
+.productos-list {
+    display: grid;
+    gap: 8px;
+}
+
+.producto-item {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.producto-item:hover {
+    background: #f8f9fa;
+    border-color: #28a745;
+}
+
+.producto-item span:first-child {
+    color: #2d3a4b;
+    font-weight: 500;
+}
+
+.producto-item span:last-child {
+    color: #666;
+    font-weight: 600;
+    background: rgba(40, 167, 69, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+/* Actualizar estilos de redemption header para consistencia */
+.redemption-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.redemption-header h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3a4b;
+    margin: 0;
+}
+
+.redemption-header h4::before {
+    content: '🎁';
+    margin-right: 8px;
+}
+
+.points-badge {
+    background: linear-gradient(135deg, #28a745, #20a045);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+}
+
+/* Detalles de redemption */
+.redemption-details {
+    background: #f0f8f0;
+    border-radius: 6px;
+    padding: 15px;
+    border-left: 3px solid #28a745;
+}
+
+.redemption-details p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+.redemption-details strong {
+    color: #2d3a4b;
+    font-weight: 600;
+    min-width: 120px;
+}
+
 /* Media Queries - Móvil */
 @media (max-width: 768px) {
     /* Header móvil */

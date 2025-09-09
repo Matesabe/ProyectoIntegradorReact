@@ -21,71 +21,142 @@ const ProfilePage = () => {
     userData && userData.userData && userData.userData.Role === "Administrator";
   const [comprasCliente, setComprasCliente] = useState([]);
   const [redemptionsCliente, setRedemptionsCliente] = useState([]);
+  const [loadingCompras, setLoadingCompras] = useState(true);
+  const [loadingRedemptions, setLoadingRedemptions] = useState(true);
 
   useEffect(() => {
-    if (userLoged) {
-      getComprasByUserId(userData.userData.id, userToken)
-        .then((compras) => {
-          setComprasCliente(compras);
-          displayCompras(compras);
-        })
-        .catch((error) => {
+    const fetchCompras = async () => {
+      if (userLoged && userData.userData?.id) {
+        try {
+          setLoadingCompras(true);
+          const compras = await getComprasByUserId(userData.userData.id, userToken);
+          setComprasCliente(compras || []);
+          console.log("Compras obtenidas:", compras);
+        } catch (error) {
           console.error("Error al obtener las compras:", error);
-        });
-    }
-  }, [userLoged, userData.userData.id]);
+          setComprasCliente([]);
+        } finally {
+          setLoadingCompras(false);
+        }
+      }
+    };
 
-  const displayCompras = (compras) => {
-    const comprasList = document.querySelector(".purchase-history-list");
-    if (!compras || compras.length === 0) {
-      comprasList.innerHTML = "<p>No tienes compras registradas.</p>";
-      return;
-    }
-    comprasList.innerHTML = ""; // Limpiar la lista antes de mostrar las nuevas compras
-    compras.forEach((compra) => {
-      const compraItem = document.createElement("div");
-      compraItem.className = "compra-item";
-      compraItem.innerHTML = `
-        <p>ID: ${compra.id}</p>
-        <p>Fecha: ${new Date(compra.fecha).toLocaleDateString()}</p>
-        <p>Total: $${compra.total}</p>
-      `;
-      comprasList.appendChild(compraItem);
-    });
-  };
+    fetchCompras();
+  }, [userLoged, userData.userData?.id, userToken]);
 
   useEffect(() => {
-    if (userLoged) {
-      getRedemptionsByUserId(userData.userData.id, userToken)
-        .then((redemptions) => {
-          setRedemptionsCliente(redemptions);
-          displayRedemptions(redemptions);
-        })
-        .catch((error) => {
+    const fetchRedemptions = async () => {
+      if (userLoged && userData.userData?.id) {
+        try {
+          setLoadingRedemptions(true);
+          const redemptions = await getRedemptionsByUserId(userData.userData.id, userToken);
+          setRedemptionsCliente(redemptions || []);
+          console.log("Redemptions obtenidas:", redemptions);
+        } catch (error) {
           console.error("Error al obtener los canjes:", error);
-        });
-    }
-  }, [userLoged, userData.userData.id]);
+          setRedemptionsCliente([]);
+        } finally {
+          setLoadingRedemptions(false);
+        }
+      }
+    };
 
-  const displayRedemptions = (redemptions) => {
-    const redemptionsList = document.querySelector(".redemption-history-list");
-    if (!redemptions || redemptions.length === 0) {
-      redemptionsList.innerHTML = "<p>No tienes canjes registrados.</p>";
-      return;
-    }
-    redemptionsList.innerHTML = ""; // Limpiar la lista antes de mostrar los nuevos canjes
-    redemptions.forEach((redemption) => {
-      const redemptionItem = document.createElement("div");
-      redemptionItem.className = "redemption-item";
-      redemptionItem.innerHTML = `
-        <p>ID: ${redemption.id}</p>
-        <p>Puntos Usados: ${redemption.pointsUsed}</p>
-        <p>Fecha: ${new Date(redemption.date).toLocaleDateString()}</p>
-      `;
-      redemptionsList.appendChild(redemptionItem);
-    });
+    fetchRedemptions();
+  }, [userLoged, userData.userData?.id, userToken]);
+
+  const formatClientName = (nameObj) => {
+    if (typeof nameObj === 'string') return nameObj;
+    if (nameObj && nameObj.Value) return nameObj.Value;
+    return 'N/A';
   };
 
+  const formatClientEmail = (emailObj) => {
+    if (typeof emailObj === 'string') return emailObj;
+    if (emailObj && emailObj.Value) return emailObj.Value;
+    return 'N/A';
+  };
+
+ 
+  const renderCompras = () => {
+    if (loadingCompras) {
+      return <div className="loading-message">Cargando compras...</div>;
+    }
+
+    if (!comprasCliente || comprasCliente.length === 0) {
+      return <div className="no-data-message">No tienes compras registradas.</div>;
+    }
+
+    return comprasCliente.map((compra) => (
+      <div key={compra.id} className="compra-item">
+        <div className="compra-header">
+          <h4>Compra #{compra.id}</h4>
+          <span className="amount-badge">${compra.amount}</span>
+        </div>
+        
+        <div className="compra-details">
+          <p>
+            <strong>Fecha:</strong> {new Date(compra.date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </p>
+          <p>
+            <strong>Monto:</strong> ${compra.amount}
+          </p>
+          <p>
+            <strong>Puntos Generados:</strong> {compra.pointsGenerated}
+          </p>
+        </div>
+
+        {compra.purchaseProducts && compra.purchaseProducts.length > 0 && (
+          <div className="productos-info">
+            <strong>Productos:</strong>
+            <div className="productos-list">
+              {compra.purchaseProducts.map((producto, index) => (
+                <div key={index} className="producto-item">
+                  <span>Producto #{producto.productId}</span>
+                  <span>Cantidad: {producto.quantity}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    ));
+  };
+
+  
+  const renderRedemptions = () => {
+    if (loadingRedemptions) {
+      return <div className="loading-message">Cargando canjes...</div>;
+    }
+    if (!redemptionsCliente || redemptionsCliente.length === 0) {
+      return <div className="no-data-message">No tienes canjes registrados.</div>;
+    }
+
+    return redemptionsCliente.map((redemption) => (
+      <div key={redemption.id} className="redemption-item">
+        <div className="redemption-header">
+          <h4>Canje #{redemption.id}</h4>
+          <span className="points-badge">{redemption.pointsUsed} pts</span>
+        </div>
+        
+        <div className="redemption-details">
+          <p>
+            <strong>Fecha:</strong> {new Date(redemption.date).toLocaleDateString('es-ES', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </p>
+          <p>
+            <strong>Puntos Usados:</strong> {redemption.pointsUsed}
+          </p>
+        </div>
+      </div>
+    ));
+  };
 
   const userRol = userData ? userData.userData.rol : null;
 
@@ -150,7 +221,7 @@ const ProfilePage = () => {
   const _onLogout = (e) => {
     e.preventDefault();
     dispatch(onLogout());
-    setIsDropdownOpen(false); // Cerrar dropdown después del logout
+    setIsDropdownOpen(false);
     alert("Logout exitoso");
     navigateTo("/");
   };
@@ -212,14 +283,18 @@ const ProfilePage = () => {
           <h2>Mis Compras</h2>
           <p>Aquí puedes ver tus compras recientes.</p>
         </div>
-        <div className="purchase-history-list"></div>
+        <div className="purchase-history-list">
+          {renderCompras()}
+        </div>
       </div>
       <div className="redemption-history">
         <div className="redemption-history-content">
           <h2>Mis Canjes</h2>
           <p>Aquí puedes ver tus canjes recientes.</p>
         </div>
-        <div className="redemption-history-list"></div>
+        <div className="redemption-history-list">
+          {renderRedemptions()}
+        </div>
       </div>
     </div>
   );
