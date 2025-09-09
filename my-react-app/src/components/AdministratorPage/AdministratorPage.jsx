@@ -225,6 +225,10 @@ const AdministratorPage = () => {
             <h3>Reporte Compras</h3>
             <button><a href="/admin/reportes/compras">Ver Reporte</a></button>
           </div>
+          <div className="div-imports">
+            <h3>Reportes Importación</h3>
+            <button><a href="/admin/reportes/imports">Ver Reporte</a></button>
+          </div>
         </div>
       </div>
     </div>

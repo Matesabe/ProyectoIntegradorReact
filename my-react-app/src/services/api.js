@@ -475,6 +475,31 @@ const getRedemptionsByUserId = async (userId, userToken) => {
   }
 };
 
+const getAllReports = async (userToken) => {
+  try {
+    const response = await fetch(`${BASE_URL}/api/reports`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "3600",
+        "Authorization": `Bearer ${userToken}`
+      }
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      return Promise.reject("Error al obtener los reportes");
+    }
+  } catch (error) {
+    return Promise.reject("Ha ocurrido un error al obtener los reportes");
+  }
+};
+
 export {login, registrarse, getAllCompras,
    getComprasByUserId, getMistralProducts, getProductById, getProductByCode, getSubProducts, getWarehouses,
-   getUserByCi, getUserById, createRedemption, getRedemptions, getPromotions, getRedemptionsByUserId, postPromotion, updatePromotion, getPromotionById, deletePromotion};
+   getUserByCi, getUserById, createRedemption, getRedemptions, getPromotions, getRedemptionsByUserId, postPromotion, 
+   updatePromotion, getPromotionById, deletePromotion, getAllReports};

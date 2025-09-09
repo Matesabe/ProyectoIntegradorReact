@@ -20,6 +20,7 @@ import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import RedemptionsReports from './components/AdministratorPage/reports/RedemptionsReports/RedemptionsReports';
 import PurchasesReports from './components/AdministratorPage/reports/PurchasesReports/PurchasesReports';
+import  ImportReports  from './components/AdministratorPage/reports/ImportReports/ImportReports';
 
 function App() {
     const userData = useSelector((state) => state.userSlice.userData);
@@ -108,6 +109,14 @@ function App() {
                     element={
                         <AdminRoute>
                             <PurchasesReports />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/admin/reportes/imports"
+                    element={
+                        <AdminRoute>
+                            <ImportReports />
                         </AdminRoute>
                     }
                 />
