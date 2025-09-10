@@ -22,55 +22,6 @@ const ImportReports = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Datos hardcodeados temporalmente
-  const MOCK_REPORTS = [
-    {
-      "id": 5,
-      "date": "2025-07-27T13:14:02.3900293",
-      "entries": [
-        {
-          "id": 17,
-          "description": "Alta subproducto",
-          "status": "Ok",
-          "errorMessage": null,
-          "reportId": 5
-        },
-        {
-          "id": 18,
-          "description": "Alta subproducto",
-          "status": "Error",
-          "errorMessage": "Error al dar de alta el producto: campo \"Color\" no puede ser null",
-          "reportId": 5
-        }
-      ],
-      "totalLines": 2,
-      "procecedLines": 2,
-      "type": "Products"
-    },
-    {
-      "id": 6,
-      "date": "2025-07-27T13:14:02.3900293",
-      "entries": [
-        {
-          "id": 19,
-          "description": "Alta subproducto",
-          "status": "Ok",
-          "errorMessage": null,
-          "reportId": 6
-        },
-        {
-          "id": 20,
-          "description": "Alta subproducto",
-          "status": "Ok",
-          "errorMessage": null,
-          "reportId": 6
-        }
-      ],
-      "totalLines": 2,
-      "procecedLines": 2,
-      "type": "Products"
-    }
-  ];
 
   const renderNavLinks = () => {
     if (userLoged) {
@@ -151,18 +102,14 @@ const ImportReports = () => {
     };
   }, [isDropdownOpen]);
 
-  // ✅ Modificado para usar datos mock temporalmente
   useEffect(() => {
     const fetchReports = async () => {
       try {
         setLoading(true);
 
-        // TODO: Cambiar por el fetch real cuando esté listo
-        // const reportsData = await getAllReports(userToken);
-        
-        // ✅ Usando datos hardcodeados temporalmente
-        const reportsData = MOCK_REPORTS;
-        
+
+    const reportsData = await getAllReports(userToken);
+
         setReports(reportsData);
         console.log("Reportes obtenidos:", reportsData);
 
