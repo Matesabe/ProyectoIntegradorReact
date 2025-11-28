@@ -14,16 +14,30 @@
     --light-gray: #f8f9fa;
     --dark-text: #2d3a4b;
     --border-radius: 16px;
-    --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-    --box-shadow-hover: 0 16px 64px rgba(0, 0, 0, 0.2);
-    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
     --card-bg: #ffffff;
-    --card-hover-bg: #ffffff;
+    --border-color: #e0e4e7;
 }
 
 /* Global styles */
 *, *::before, *::after {
     box-sizing: border-box;
+}
+
+/* Container principal */
+.stores-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--dark-text);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--gradient-main);
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
 }
 
 .stores-container::before {
@@ -53,7 +67,7 @@
 /* Título principal */
 .stores-content h1 {
     font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 900;
+    font-weight: 700;
     text-align: center;
     margin-bottom: 60px;
     background: linear-gradient(135deg, var(--primary-blue), var(--khaki), var(--field-drab));
@@ -62,7 +76,6 @@
     background-clip: text;
     position: relative;
     padding: 40px 20px;
-    animation: fadeInDown 1s ease-out;
 }
 
 .stores-content h1::before {
@@ -75,7 +88,6 @@
     height: 6px;
     background: linear-gradient(90deg, var(--primary-blue), var(--khaki));
     border-radius: 3px;
-    box-shadow: 0 2px 8px rgba(79, 140, 255, 0.3);
 }
 
 .stores-content h1::after {
@@ -85,7 +97,6 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 3rem;
-    animation: bounce 2s infinite;
 }
 
 /* Container de tiendas */
@@ -93,41 +104,33 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 40px;
-    animation: fadeInUp 0.8s ease-out 0.3s both;
 }
 
 /* Cards de tiendas */
 .store-item {
     background: var(--card-bg);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     padding: 40px;
     box-shadow: var(--box-shadow);
-    transition: var(--transition);
     position: relative;
     overflow: hidden;
     border-left: 6px solid var(--primary-blue);
-    animation: staggerFadeIn 0.6s ease-out backwards;
 }
 
 .store-item:nth-child(1) { 
-    animation-delay: 0.1s; 
     border-left-color: var(--primary-blue);
 }
 .store-item:nth-child(2) { 
-    animation-delay: 0.2s; 
     border-left-color: var(--success-green);
 }
 .store-item:nth-child(3) { 
-    animation-delay: 0.3s; 
     border-left-color: var(--warning-orange);
 }
 .store-item:nth-child(4) { 
-    animation-delay: 0.4s; 
     border-left-color: var(--field-drab);
 }
 .store-item:nth-child(5) { 
-    animation-delay: 0.5s; 
     border-left-color: var(--khaki);
 }
 
@@ -142,40 +145,10 @@
     border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
-.store-item::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(79, 140, 255, 0.1) 0%, transparent 70%);
-    border-radius: 50%;
-    transform: translate(50%, -50%);
-    transition: var(--transition);
-}
-
-.store-item:hover {
-    transform: translateY(-12px) scale(1.03);
-    box-shadow: var(--box-shadow-hover);
-    background: var(--card-hover-bg);
-    border-left-width: 10px;
-}
-
-.store-item:hover::after {
-    transform: translate(50%, -50%) scale(1.5);
-    opacity: 0.8;
-}
-
-/* Efecto de brillo */
-.store-item:hover::before {
-    animation: shimmer 0.8s ease-out;
-}
-
 /* Títulos de tiendas */
 .store-item h2 {
     font-size: clamp(1.4rem, 3vw, 1.8rem);
-    font-weight: 800;
+    font-weight: 600;
     margin-bottom: 25px;
     color: var(--dark-text);
     position: relative;
@@ -191,7 +164,6 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.5rem;
-    animation: pulse 2s infinite;
 }
 
 /* Párrafos de información */
@@ -203,18 +175,10 @@
     padding: 15px 20px;
     background: rgba(248, 249, 250, 0.8);
     border-radius: 12px;
-    transition: var(--transition);
     position: relative;
     z-index: 2;
     font-weight: 500;
     border-left: 3px solid transparent;
-}
-
-.store-item p:hover {
-    background: rgba(248, 249, 250, 1);
-    transform: translateX(8px);
-    border-left-color: var(--primary-blue);
-    box-shadow: 0 4px 15px rgba(79, 140, 255, 0.2);
 }
 
 /* Estilos específicos por tipo de información */
@@ -240,16 +204,6 @@
     font-weight: normal;
 }
 
-.store-item p:first-of-type:hover {
-    background: rgba(79, 140, 255, 0.2);
-    border-left-color: var(--primary-blue);
-}
-
-.store-item p:last-of-type:hover {
-    background: rgba(40, 167, 69, 0.2);
-    border-left-color: var(--success-green);
-}
-
 /* Decoraciones adicionales para cada tienda */
 .store-item:nth-child(1)::after {
     content: '🌊';
@@ -272,7 +226,7 @@
 }
 
 .store-item:nth-child(3)::after {
-    content: '⛲';
+    content: '🍊';
     position: absolute;
     top: 20px;
     right: 20px;
@@ -299,11 +253,6 @@
     font-size: 2rem;
     opacity: 0.3;
     z-index: 1;
-}
-
-.store-item:hover .store-icon {
-    opacity: 1;
-    transform: scale(1.2) rotate(10deg);
 }
 
 /* Responsive Design */
@@ -383,88 +332,6 @@
     }
 }
 
-/* Animaciones */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes staggerFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.7;
-        transform: scale(1.1);
-    }
-}
-
-@keyframes shimmer {
-    0% {
-        background-position: -200% 0;
-    }
-    100% {
-        background-position: 200% 0;
-    }
-}
-
-/* Efectos de fondo adicionales */
-.stores-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 20%, rgba(79, 140, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(40, 167, 69, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(253, 126, 20, 0.05) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: -1;
-}
-
 /* Scrollbar personalizada */
 .stores-content::-webkit-scrollbar {
     width: 8px;
@@ -476,11 +343,6 @@
 }
 
 .stores-content::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, var(--primary-blue), #3a7bd5);
+    background: var(--primary-blue);
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.stores-content::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #3a7bd5, var(--primary-blue));
 }

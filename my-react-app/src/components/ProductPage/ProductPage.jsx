@@ -234,7 +234,7 @@ const ProductPage = () => {
               <a href="/catalog">Catálogo</a>
             </li>
             <li>
-              <a href="/">Puntos Sarga</a>
+              <a href="/stores">Nuestras Tiendas</a>
             </li>
             {renderNavLinks()}
           </ul>

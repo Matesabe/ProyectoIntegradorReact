@@ -46,11 +46,10 @@ const PromotionCreatePage = () => {
 
   const userLoged = userData && userData.token;
   const userRol = userData ? userData.userData.rol : null;
-  const userToken = userData ? userData.token : null;
 
   const handleCreatePromotion = (e, promotion) => {
     e.preventDefault();
-    postPromotion(promotion, userToken)
+    postPromotion(promotion)
       .then((response) => {
         setPromotion(response);
         setMensaje("Promoción creada exitosamente");
