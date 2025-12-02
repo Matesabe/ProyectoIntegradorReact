@@ -7,10 +7,13 @@ import userIcon from '/img/Home/user_icon.png';
 import { onLogout } from '../../app/slices/userSlice';
 
 import imagenCatalogo from '/img/Home/MISTRAL_AGUS_2_12857.jpg';
+import frut2 from '/img/Home/frut2.jpg';
+import foot from '/img/Home/foot.jpg';
 import imagenCatalogo1 from '/img/Home/mistral.jpg';
 import imagenCatalogo2 from '/img/Home/mistral2.jpg';
 import imagenCatalogo3 from '/img/Home/mistral3.jpg';
 import instagramIcon from '/img/Home/Instagram_icon.png';
+
 
 
 const HomePage = () => {
@@ -127,24 +130,7 @@ const HomePage = () => {
                     <a id="ver-catalogo" href="/catalog">Ver Catálogo</a>
                 </div>
                 <div className='catalogo-image'>
-                    <img src={imagenCatalogo} alt="Catálogo" />
-                </div>
-            </div>
-            <div className='productos-section'>
-                <div className='productos-image' data-label="Remeras Hombre" id='remeras-hombre'>
-                    <a href="/">
-                    <img src={imagenCatalogo1} alt="Remeras Hombre" />
-                    </a>
-                </div>
-                <div className='productos-image' data-label="Remeras Mujer" id='remeras-mujer'>
-                    <a href="/">
-                    <img src={imagenCatalogo2} alt="Remeras Mujer" />
-                    </a>
-                </div>
-                <div className='productos-image' data-label="Jeans Hombre" id='jeans-hombre'>
-                    <a href="/">
-                    <img src={imagenCatalogo3} alt="Jeans Hombre" />
-                    </a>
+                    <img src={frut2} alt="Catálogo" />
                 </div>
             </div>
             <div className='puntos-section'>
@@ -153,7 +139,7 @@ const HomePage = () => {
                     <p>Sumá puntos con tus compras y canjealos por productos en los locales Sarga.</p>
                 </div>
                 <div className='puntos-image'>
-                    <img src={imagenCatalogo} alt="Puntos" />
+                    <img src={foot} alt="Puntos" />
                 </div>
             </div>
             <div className='footer'>

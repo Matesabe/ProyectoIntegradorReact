@@ -2,6 +2,7 @@
     --field-drab: #73683bff;
     --field-drab-2: #675d35;
     --caf-noir: #583e23ff;
+    --caf-noir2: rgb(94, 62, 28);
     --gunmetal: #13262fff;
     --khaki: #b0a084ff;
     --lavender-web: #e9e6ffff;
@@ -62,7 +63,7 @@
 }
 
 .catalogo-section {
-    background-color: var(--field-drab);
+    background-color: var(--caf-noir);
 }
 
 .catalogo-text h2 {
@@ -89,7 +90,7 @@
 }
 
 .puntos-section {
-    background-color: var(--field-drab);
+    background-color: var(--khaki);
 }
 
 .puntos-text h2 {
